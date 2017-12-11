@@ -7,21 +7,21 @@ function errorHandler(err: Error, target: any, message: IMergeErrorMessage) {
 
     const re = /property "?(\w*)"?[,:] object/i;
 
-    let matches = null;
+    let matches: RegExpExecArray = null;
 
     // If error is not a `TypeError`, or does not match the expression above,
     // rethrow it
 
     if (!(err instanceof TypeError) || !(matches = re.exec(err.message))) throw err;
 
-    const keys = Object.keys(target);
-    const offender = matches[1].toLowerCase();
+    const keys: string[] = Object.keys(target);
+    const offender: string = matches[1].toLowerCase();
 
     // Iterate trough all keys in the target object, checking
     // for a "best match" based on most number of like characters
     // insensitive of case
 
-    const bestMatch = keys.reduce((lastBestMatch, key) => {
+    const bestMatch = keys.reduce((lastBestMatch: string, key: string) => {
         let charIndex = 0;
 
         while (
