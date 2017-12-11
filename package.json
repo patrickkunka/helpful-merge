@@ -1,0 +1,27 @@
+{
+    "name": "helpful-merge",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./dist/index.js",
+    "types": "./types/index.d.ts",
+    "browser": "./dist/index.js",
+    "scripts": {
+      "test:unit": "mocha -r ts-node/register ./test/unit.ts",
+      "test": "npm run test:unit",
+      "lint": "tslint -c tslint.json './src/**/*.ts'",
+      "watch:node": "tsc --watch",
+      "build:node": "tsc"
+    },
+    "devDependencies": {
+      "@types/chai": "^4.0.5",
+      "@types/chai-as-promised": "^7.1.0",
+      "@types/mocha": "^2.2.44",
+      "chai": "^3.5.0",
+      "chai-as-promised": "^5.3.0",
+      "chai-shallow-deep-equal": "^1.4.0",
+      "mocha": "^3.0.2",
+      "ts-node": "^3.3.0",
+      "tslint": "^5.8.0",
+      "typescript": "^2.6.1"
+    }
+  }
