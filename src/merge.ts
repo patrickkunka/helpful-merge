@@ -1,12 +1,25 @@
-import Config from './Config';
+import Config        from './Config';
+import errorHandler  from './errorHandler';
+import * as Messages from './Messages';
 
 function merge(target: any, source: any, options: any = {}): any {
-    const config: Config = options instanceof Config ? options : Object.assign(new Config(), options);
-
     let sourceKeys: string[] = [];
+    let config: Config;
+
+    if (options instanceof Config) {
+        config = options;
+    } else {
+        config = new Config();
+    }
+
+    if (typeof options === 'boolean') {
+        config.deep = true;
+    } else if (options && typeof options === 'object') {
+        Object.assign(config, options);
+    }
 
     if (!target || typeof target !== 'object') {
-        throw new TypeError(`[Helpful Merge] Target "${target.toString()}" must be a valid object`);
+        throw new TypeError(Messages.TYPE_ERROR(target.toString()));
     }
 
     if (Array.isArray(source)) {
@@ -39,7 +52,11 @@ function merge(target: any, source: any, options: any = {}): any {
             // - Null pointers
             // - Arrays if `mergeArray` disabled
 
-            target[key] = source[key];
+            try {
+                target[key] = source[key];
+            } catch (err) {
+                errorHandler(err, target, config.errorMessage);
+            }
         } else {
             // Deep merge objects/arrays
 
@@ -48,7 +65,11 @@ function merge(target: any, source: any, options: any = {}): any {
                 // is an object, if `cloneAtLeaf` is disabled, assign
                 // by reference only and do not clone.
 
-                target[key] = source[key];
+                try {
+                    target[key] = source[key];
+                } catch (err) {
+                    errorHandler(err, target, config.errorMessage);
+                }
 
                 continue;
             }

@@ -1,4 +1,6 @@
-import ArrayStrategy from './Constants/ArrayStrategy';
+import ArrayStrategy      from './Constants/ArrayStrategy';
+import IMergeErrorMessage from './Interfaces/IMergeMessage';
+import * as Messages      from './Messages';
 
 class Config {
     public deep:                boolean       = false;
@@ -8,12 +10,10 @@ class Config {
     public mergeArrays:         boolean       = true;
     public arrayStrategy:       ArrayStrategy = ArrayStrategy.REPLACE;
 
+    public errorMessage: IMergeErrorMessage = Messages.MERGE_ERROR;
+
     constructor() {
         Object.seal(this);
-    }
-
-    public errorMessage(offender, suggestion) {
-        return `Invalid option "${offender}"` + (suggestion ? ` Did you mean "${suggestion}"?` : '');
     }
 }
 
