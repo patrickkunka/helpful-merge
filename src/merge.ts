@@ -16,8 +16,12 @@ function merge(target: any, source: any, options: IConfig|true = {}): any {
 
     if (typeof options === 'boolean' && options === true) {
         config.deep = true;
-    } else if (options && typeof options === 'object') {
+    } else if (options && config !== options && typeof options === 'object') {
         Object.assign(config, options);
+
+        if ([ArrayStrategy.PUSH, ArrayStrategy.REPLACE].indexOf(config.arrayStrategy) < 0) {
+            throw RangeError(Messages.INVALID_ARRAY_STRATEGY(config.arrayStrategy));
+        }
     }
 
     if (!target || typeof target !== 'object') {

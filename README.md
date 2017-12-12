@@ -2,16 +2,49 @@
 
 A highly-configurable merge implementation with helpful error handling for validating consumer-provided input against configuration interfaces at runtime.
 
-Perfect for creating robust but helpful entry points for JavaScript libraries and APIs.
+Perfect for creating robust and helpful entry points for JavaScript libraries and APIs.
 
 Helpful Merge also includes efficient and customizable implementations of deep recursive merge, array merge, and more.
 
 #### Contents
 
-- [Background](#backgrounds)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Background](#backgrounds)
 - [Options](#options)
+
+## Installation
+
+Firstly, install the package using your package manager of choice.
+
+```
+npm install helpful-merge --save-dev
+```
+
+You may then import the merge function into your project's modules.
+
+```js
+import merge from 'helpful-merge';
+```
+
+## Usage
+
+Helpful Merge can be used in place of any existing merge implementation such as ES6 `Object.assign()`, lodash/underscore's `merge()`, or jQuery's `$.extend()`.
+
+Unlike `Object.assign()` however, Helpful Merge will only merge one source object into one target object at a time, as its third parameter is reserved for an optional configuration object (see options).
+
+The function always returns a reference to the target object.
+
+```js
+/**
+ * @param  {any}         target
+ * @param  {any}         source
+ * @param  {object|true} [options]
+ * @return {any}         target
+ */
+
+merge(target, source, options);
+```
 
 ## Background
 
@@ -49,7 +82,7 @@ const myWidget = new Widget({option3: 50}); // TypeError: Cannot add property op
 
 Unfortunately, this message is not particularly helpful, and particularly unhelpful for novice developers who may not understand the concept of extensibility. There is where Helpful Merge comes in.
 
-We can replace `Object.assign()` in the above example with Helpful Merge's merge implementation, which provides a helpful and customizable error message with a suggestion of of the closest matching property name on the target object:
+We can replace `Object.assign()` in the above example with Helpful Merge's merge implementation, which provides a helpful and customizable error message with a suggestion of the closest matching property name on the target object:
 
 ```js
 import merge from 'helpful-merge';
@@ -59,40 +92,7 @@ import merge from 'helpful-merge';
 const config = merge(new Config(), consumerOptions); // TypeError: Unknown property "option3". Did you mean "option2"?
 ```
 
-This provides an easy means of catching typos, incorrect casings, or API version mismatches.
-
-## Installation
-
-Firstly, install the package using your package manager of choice.
-
-```
-npm install helpful-merge --save-dev
-```
-
-You may then import the merge function into your project's modules.
-
-```js
-import merge from 'helpful-merge';
-```
-
-## Usage
-
-Helpful Merge can be used in place of any existing merge implementation such as ES6 `Object.assign()`, lodash/underscore's `merge()`, or jQuery's `$.extend()`.
-
-Unlike `Object.assign()` however, Helpful Merge will only merge one source object into one target object at a time, as its third parameter is reserved for an optional configuration object (see options).
-
-The function always returns a reference to the target object.
-
-```js
-/**
- * @param  {any}         target
- * @param  {any}         source
- * @param  {object|true} [options]
- * @return {any}         target
- */
-
-merge(target, source, options);
-```
+This provides an easy means of catching typos, incorrect casings, or API version mismatches, which in turn provides a great developer experience for consumers of your library or API.
 
 ## Options
 

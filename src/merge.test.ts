@@ -226,6 +226,12 @@ describe('merge()', () => {
         assert.equal(obj1.foo[1], obj2.foo[0]);
     });
 
+    it('should throw an error if an invalid array strategy is provided', () => {
+        assert.throws(() => {
+            merge({}, {}, {arrayStrategy: ('foo' as ArrayStrategy)});
+        }, Messages.INVALID_ARRAY_STRATEGY('foo'));
+    });
+
     it('should add arrays by reference when deep merging if `useReferenceIfArray` option set', () => {
         const obj1 = {
             foo: [{}]
@@ -342,7 +348,8 @@ describe('merge()', () => {
         Object.seal(obj1);
 
         const config = {
-            errorMessage: (offending, suggestion) => `Invalid configuration option "${offending}". Did you mean "${suggestion}"?`
+            errorMessage: (offending, suggestion) =>
+                `Invalid configuration option "${offending}". Did you mean "${suggestion}"?`
         }
 
         assert.throws(() => merge(obj1, obj2, config), 'Invalid configuration option "bar". Did you mean "FooBarCar"?');
