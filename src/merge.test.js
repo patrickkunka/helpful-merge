@@ -282,6 +282,20 @@ describe('merge()', () => {
         assert.throws(() => merge(obj1, obj2), Messages.MERGE_ERROR('Foo', 'foo'));
     });
 
+    it('should provide no suggestion if no similar property name exists', () => {
+        const obj1 = {
+            bot: null
+        };
+
+        const obj2 = {
+            foo: 'bar'
+        };
+
+        Object.seal(obj1);
+
+        assert.throws(() => merge(obj1, obj2), TypeError, new RegExp('^' + Messages.MERGE_ERROR('foo') + '$'));
+    });
+
     it('should provide a reasonable suggestion if a multiple similar property names exists', () => {
         const obj1 = {
             fooBar: null,

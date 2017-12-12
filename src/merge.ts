@@ -62,6 +62,7 @@ function merge(target: any, source: any, options: IConfig = {}): any {
             (Array.isArray(source[key]) && config.useReferenceIfArray) ||
             (!target[key] && config.useReferenceIfTargetUnset)
         ) {
+            // If:
             // - Shallow merge
             // - All non-object primatives
             // - Null pointers

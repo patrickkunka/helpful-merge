@@ -1,10 +1,5 @@
+import IBestMatch         from './Interfaces/IBestMatch';
 import IMergeErrorMessage from './Interfaces/IMergeMessage';
-
-interface IBestMatch {
-    key: string;
-    delta: number;
-    totalMatching: number;
-}
 
 function handleMergeError(err: Error, target: any, offendingKey: string, message: IMergeErrorMessage) {
     // Rethrow if:
@@ -43,7 +38,7 @@ function handleMergeError(err: Error, target: any, offendingKey: string, message
         return currBestMatch;
     }, {key: '', delta: Infinity, totalMatching: 0});
 
-    const suggestion = bestMatch ? bestMatch.key : '';
+    const suggestion = bestMatch && bestMatch.totalMatching > 1 ? bestMatch.key : '';
 
     throw new TypeError(message(offendingKey, suggestion));
 }
