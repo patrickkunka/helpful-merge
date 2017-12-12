@@ -77,7 +77,9 @@ const config = Object.assign(new Config(), consumerOptions);
 When the consumer provides an option not defined in the config class, a type error will be thrown:
 
 ```js
-const myWidget = new Widget({option3: 50}); // TypeError: Cannot add property option3, object is not extensible
+const myWidget = new Widget({option3: 50});
+
+// TypeError: Cannot add property option3, object is not extensible
 ```
 
 Unfortunately, this message is not particularly helpful, and particularly unhelpful for novice developers who may not understand the concept of extensibility. There is where Helpful Merge comes in.
@@ -89,7 +91,9 @@ import merge from 'helpful-merge';
 
 ...
 
-const config = merge(new Config(), consumerOptions); // TypeError: Unknown property "option3". Did you mean "option2"?
+const config = merge(new Config(), consumerOptions);
+
+// TypeError: Unknown property "option3". Did you mean "option2"?
 ```
 
 This provides an easy means of catching typos, incorrect casings, or API version mismatches, which in turn provides a great developer experience for consumers of your library or API.
