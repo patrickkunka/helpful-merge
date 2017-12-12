@@ -4,7 +4,7 @@ import handleMergeError from './handleMergeError';
 import IConfig          from './Interfaces/IConfig';
 import * as Messages    from './Messages';
 
-function merge(target: any, source: any, options: IConfig = {}): any {
+function merge(target: any, source: any, options: IConfig|true = {}): any {
     let sourceKeys: string[] = [];
     let config: Config;
 

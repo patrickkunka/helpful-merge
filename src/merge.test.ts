@@ -1,7 +1,7 @@
 import * as chai     from 'chai';
+import ArrayStrategy from './Constants/ArrayStrategy';
 import merge         from './merge';
 import * as Messages from './Messages';
-import ArrayStrategy from './Constants/ArrayStrategy';
 
 const assert = chai.assert;
 
@@ -84,14 +84,14 @@ describe('merge()', () => {
     });
 
     it('should skip read-only properties', () => {
-        const obj1 = {};
+        const obj1: any = {};
 
-        const obj2 = {
+        const obj2: any = {
             foo: 'bar',
             get baz() {
                 return this.foo;
             }
-        }
+        };
 
         merge(obj1, obj2);
 
@@ -99,11 +99,11 @@ describe('merge()', () => {
     });
 
     it('should include accessor properties', () => {
-        const obj1 = {};
+        const obj1: any = {};
 
         let baz = 'car';
 
-        const obj2 = {
+        const obj2: any = {
             foo: 'bar',
             get baz() {
                 return baz;
@@ -111,7 +111,7 @@ describe('merge()', () => {
             set baz(value) {
                 baz = value;
             }
-        }
+        };
 
         merge(obj1, obj2);
 
@@ -120,14 +120,14 @@ describe('merge()', () => {
     });
 
     it('should include read-only properties if `includeReadOnly` option set', () => {
-        const obj1 = {};
+        const obj1: any = {};
 
-        const obj2 = {
+        const obj2: any = {
             foo: 'bar',
             get baz() {
                 return this.foo;
             }
-        }
+        };
 
         merge(obj1, obj2, {
             includeReadOnly: true
@@ -138,11 +138,11 @@ describe('merge()', () => {
     });
 
     it('should skip non-enumerable properties', () => {
-        const obj1 = {};
-        const obj2 = {};
+        const obj1: any = {};
+        const obj2: any = {};
 
         Object.defineProperty(obj2, 'bar', {
-            get:() => 'baz'
+            get: () => 'baz'
         });
 
         merge(obj1, obj2);
@@ -152,11 +152,11 @@ describe('merge()', () => {
     });
 
     it('should include non-enumerable properties if `includeNonEnumerable` option set', () => {
-        const obj1 = {};
-        const obj2 = {};
+        const obj1: any = {};
+        const obj2: any = {};
 
         Object.defineProperty(obj2, 'bar', {
-            get:() => 'baz'
+            get: () => 'baz'
         });
 
         merge(obj1, obj2, {
@@ -193,11 +193,11 @@ describe('merge()', () => {
     });
 
     it('should deep merge arrays if `deep` option set', () => {
-        const obj1 = {
+        const obj1: any = {
             foo: [{}]
         };
 
-        const obj2 = {
+        const obj2: any = {
             foo: [{bar: 1}]
         };
 
