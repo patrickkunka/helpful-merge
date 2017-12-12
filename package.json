@@ -9,8 +9,9 @@
       "test:unit": "mocha -r ts-node/register ./test/unit.ts",
       "test": "npm run test:unit",
       "lint": "tslint -c tslint.json './src/**/*.ts'",
-      "watch:node": "tsc --watch",
-      "build:node": "tsc"
+      "watch": "tsc --watch",
+      "build": "tsc",
+      "prepublishOnly": "npm run build"
     },
     "devDependencies": {
       "@types/chai": "^4.0.5",
