@@ -350,7 +350,7 @@ describe('merge()', () => {
         const config = {
             errorMessage: (offending, suggestion) =>
                 `Invalid configuration option "${offending}". Did you mean "${suggestion}"?`
-        }
+        };
 
         assert.throws(() => merge(obj1, obj2, config), 'Invalid configuration option "bar". Did you mean "FooBarCar"?');
     });

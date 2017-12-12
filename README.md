@@ -101,12 +101,12 @@ The `merge()` function accepts an optional third parameter of configuration opti
 ```js
 {
     deep: false,
-    useReferenceIfTargetUnset: false,
-    useReferenceIfArray: false,
-    includeReadOnly: false
-    includeNonEnumerable: false,
     arrayStrategy: ArrayStrategy.REPLACE,
     errorMessage: Messages.MERGE_ERROR
+    includeNonEnumerable: false,
+    includeReadOnly: false
+    useReferenceIfArray: false,
+    useReferenceIfTargetUnset: false,
 }
 ```
 
@@ -124,6 +124,97 @@ The most commonly used configuration option `deep`, can be provided in a shortha
 ```js
 merge(target, source, true);
 ```
+
+#### deep
+
+```
+@type:    boolean
+@default: false
+```
+
+An optional boolean dictating whether or not to perform a deep recursive merge. By default, only a simple shallow merge will be performed.
+
+This option may also be set using an alternative shorthand syntax whereby the value `true` is passed as the third parameter instead of `{deep: true}`.
+
+#### arrayStrategy
+
+```
+@type:    ('PUSH'|'REPLACE')
+@default: 'REPLACE'
+```
+
+A string dictating the kind of array merge strategy to use when copying the values of one array into another. By default, arrays are merged using the `'REPLACE'` strategy, where each value in the source array overwrite the value of the same index in the target.
+
+In certain configuration interfaces, where we are may wish to extend some base configuration with additional values, a `'PUSH'` strategy may be preferable. In this case, the values of the source array are pushed on to the target array, and no data is overwritten.
+
+To avoid magic strings, the available values are available via the exported `ArrayStrategy` enum, via `ArrayStrategy.PUSH`, and `ArrayStrategy.REPLACE`.
+
+#### errorMessage
+
+```
+@type:    (offending: string, suggestion: string) => string
+@default: null
+```
+
+A optional function with which to override the default error message thrown when a consumer attempts to add undefined properties to a sealed or non-extensible target object.
+
+The function receives two arguments, the key of the offending property, and a suggestion in the form of the key of a closely matching property on the target (if found). The function must return a string.
+
+The default error message function is as follows:
+
+```js
+(offender, suggestion='') => `Unknown property "${offender}"` + (suggestion ? `. Did you mean "${suggestion}"?` : '')
+```
+
+#### includeNonEnumerable
+
+```
+@type:    boolean
+@default: false
+```
+
+An optional boolean dictating whether ot not to copy non-enumerable properties on the source object to the target object.
+
+#### includeReadOnly
+
+```
+@type:    boolean
+@default: false
+```
+
+An optional boolean dictating whether or not to copy the values of "read-only" properties on the source object to the target object. Read only properties are defined as accessor properties with a "getter", but no "setter".
+
+Typically these would be defined on both the source and target, negating the need to copy them, as their values would be equal on both objects for the same underlying data.
+
+#### useReferenceIfArray
+
+```
+@type:    boolean
+@default: false
+```
+
+An optional boolean dictating whether or not to copy nested arrays by reference, when performing a deep merge.
+
+If set to `true`, the recursive merge will stop at any property who's value is an array, and copy it by reference to the target object.
+
+This provides an efficient boundary between a defined configuration structure, and consumer-provided array values where reference will suffice, and avoids unnecessary recursion and enumeration.
+
+#### useReferenceIfTargetUnset
+
+```
+@type:    boolean
+@default: false
+```
+
+An optional boolean dictating whether or not to copy nested objects or arrays by reference, under the following circumstances:
+- A deep merge is being performed (via `deep: true`)
+- The property exists on the source object as a nested object or array
+- The property does not exist on the target object, or is `null` on the target object.
+
+If set to `true`, the recursive merge will stop at these "leaf" properties and their values will be copied to the target object by reference only, rather than being recursively cloned.
+
+This provides an efficient boundary between a defined configuration structure, and consumer-provided hash or typed values where a reference will suffice, and avoids unnecessary recursion and enumeration.
+
 
 ---
 
