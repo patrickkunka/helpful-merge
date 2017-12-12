@@ -1,8 +1,10 @@
 import Config           from './Config';
+import ArrayStrategy    from './Constants/ArrayStrategy';
 import handleMergeError from './handleMergeError';
+import IConfig          from './Interfaces/IConfig';
 import * as Messages    from './Messages';
 
-function merge(target: any, source: any, options: any = {}): any {
+function merge(target: any, source: any, options: IConfig = {}): any {
     let sourceKeys: string[] = [];
     let config: Config;
 
@@ -12,22 +14,34 @@ function merge(target: any, source: any, options: any = {}): any {
         config = new Config();
     }
 
-    if (typeof options === 'boolean') {
+    if (typeof options === 'boolean' && options === true) {
         config.deep = true;
     } else if (options && typeof options === 'object') {
         Object.assign(config, options);
     }
 
     if (!target || typeof target !== 'object') {
-        throw new TypeError(Messages.TYPE_ERROR(target.toString()));
+        throw new TypeError(Messages.TYPE_ERROR_TARGET(target));
+    }
+
+    if (!source || typeof source !== 'object') {
+        throw new TypeError(Messages.TYPE_ERROR_SOURCE(source));
     }
 
     if (Array.isArray(source)) {
+        if (config.arrayStrategy === ArrayStrategy.PUSH) {
+            // Merge arrays via push()
+
+            target.push(...source);
+
+            return target;
+        }
+
         for (let i = 0; i < source.length; i++) {
             sourceKeys.push(i.toString());
         }
     } else if (source) {
-        sourceKeys = Object.keys(source);
+        sourceKeys = Object.getOwnPropertyNames(source);
     }
 
     for (const key of sourceKeys) {
@@ -45,14 +59,14 @@ function merge(target: any, source: any, options: any = {}): any {
             !config.deep ||
             typeof source[key] !== 'object' ||
             source[key] === null ||
-            (Array.isArray(source) && !config.mergeArrays) ||
-            (!target[key] && !config.cloneAtLeaf)
+            (Array.isArray(source[key]) && config.useReferenceIfArray) ||
+            (!target[key] && config.useReferenceIfTargetUnset)
         ) {
             // - Shallow merge
             // - All non-object primatives
             // - Null pointers
-            // - Arrays, if `mergeArray` disabled
-            // - Target prop null or undefined and `cloneAtLeaf` disabled
+            // - Arrays, if `useReferenceIfArray` set
+            // - Target prop null or undefined and `useRererenceIfTargetUnset` set
 
             try {
                 target[key] = source[key];
