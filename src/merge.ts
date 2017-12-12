@@ -1,6 +1,6 @@
-import Config        from './Config';
-import errorHandler  from './errorHandler';
-import * as Messages from './Messages';
+import Config           from './Config';
+import handleMergeError from './handleMergeError';
+import * as Messages    from './Messages';
 
 function merge(target: any, source: any, options: any = {}): any {
     let sourceKeys: string[] = [];
@@ -45,34 +45,22 @@ function merge(target: any, source: any, options: any = {}): any {
             !config.deep ||
             typeof source[key] !== 'object' ||
             source[key] === null ||
-            (Array.isArray(source) && !config.mergeArrays)
+            (Array.isArray(source) && !config.mergeArrays) ||
+            (!target[key] && !config.cloneAtLeaf)
         ) {
             // - Shallow merge
             // - All non-object primatives
             // - Null pointers
-            // - Arrays if `mergeArray` disabled
+            // - Arrays, if `mergeArray` disabled
+            // - Target prop null or undefined and `cloneAtLeaf` disabled
 
             try {
                 target[key] = source[key];
             } catch (err) {
-                errorHandler(err, target, config.errorMessage);
+                handleMergeError(err, target, key, config.errorMessage);
             }
         } else {
             // Deep merge objects/arrays
-
-            if (!target[key] && !config.cloneAtLeaf) {
-                // Target property is null or undefined (a leaf), source property
-                // is an object, if `cloneAtLeaf` is disabled, assign
-                // by reference only and do not clone.
-
-                try {
-                    target[key] = source[key];
-                } catch (err) {
-                    errorHandler(err, target, config.errorMessage);
-                }
-
-                continue;
-            }
 
             if (!Object.prototype.hasOwnProperty.call(target, key) || target[key] === null) {
                 // If property does not exist on target, instantiate an empty
