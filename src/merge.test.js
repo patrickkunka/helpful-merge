@@ -313,4 +313,24 @@ describe('merge()', () => {
 
         assert.throws(() => merge(obj1, obj2), Messages.MERGE_ERROR('bar', 'FooBarCar'));
     });
+
+    it('should allow a custom error message to be provided', () => {
+        const obj1 = {
+            baz: null,
+            foo: null,
+            FooBarCar: null
+        };
+
+        const obj2 = {
+            bar: 'bar'
+        };
+
+        Object.seal(obj1);
+
+        const config = {
+            errorMessage: (offending, suggestion) => `Invalid configuration option "${offending}". Did you mean "${suggestion}"?`
+        }
+
+        assert.throws(() => merge(obj1, obj2, config), 'Invalid configuration option "bar". Did you mean "FooBarCar"?');
+    });
 });
