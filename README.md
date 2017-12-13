@@ -24,8 +24,8 @@ Helpful Merge is great for creating robust and helpful entry points for JavaScri
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Background](#backgrounds)
 - [Options](#options)
+- [Library Example](#library-example)
 
 ## Installation
 
@@ -58,66 +58,6 @@ The function always returns a reference to the target object.
  */
 
 merge(target, source, options);
-```
-
-## Background
-
-A common pattern in many libraries is to allow the consumer to provide an optional object of configuration options:
-
-```js
-const myWidget = new Widget({
-    option1: true,
-    option2: 300
-});
-```
-
-If we don't validate that input, the consumer is free to provide erroneous configuration options and debugging the resulting problems in behavior becomes hard.
-
-By implementing a sealed configuration class internally with sensible defaults, and merging consumer provided input into it, we can catch erroneous configuration at the point of instantiation and provide developer feedback.
-
-```js
-class Config {
-    constructor() {
-        this.option1 = false;
-        this.option2 = 50;
-
-        Object.seal(this);
-    }
-}
-
-...
-
-const config = Object.assign(new Config(), consumerOptions);
-```
-
-When the consumer provides an option not defined in the config class, a type error will be thrown:
-
-```js
-const myWidget = new Widget({option3: 50});
-
-// TypeError: Cannot add property option3, object is not extensible
-```
-
-Unfortunately, this message is not particularly helpful, and particularly unhelpful for novice developers who may not understand the concept of extensibility. There is where Helpful Merge comes in.
-
-We can replace `Object.assign()` in the above example with Helpful Merge's merge implementation, which provides a helpful and customizable error message with a suggestion of the closest matching property name on the target object:
-
-```js
-import merge from 'helpful-merge';
-
-...
-
-const config = merge(new Config(), consumerOptions);
-
-// TypeError: Unknown property "option3". Did you mean "option2"?
-```
-
-This provides an easy means of catching typos, incorrect casings, or API version mismatches, which in turn provides a great developer experience for consumers of your library or API.
-
-Helpful Merge also allows us to easily customize this error message to further improve the developer experience for your library or API. For example:
-
-```js
-// TypeError: [MyWidget] Invalid configuration option "option3". Did you mean "option2"?
 ```
 
 ## Options
@@ -163,7 +103,7 @@ Each property is fully documented below:
 - [useReferenceIfArray](#usereferenceifarray)
 - [useReferenceIfTargetUnset](#usereferenceiftargetunset)
 
-#### deep
+### `deep`
 
 | Type    | `boolean` |
 |---------|-----------|
@@ -173,7 +113,7 @@ An optional boolean dictating whether or not to perform a deep recursive merge. 
 
 This option may also be set using an alternative shorthand syntax whereby the value `true` is passed as the third parameter instead of `{deep: true}`.
 
-##### Shallow merge (default behavior)
+##### Example 1: Shallow merge (default behavior)
 ```js
 const target = {};
 
@@ -201,7 +141,7 @@ merge(target, source, true); // or, merge(target, source, {deep: true});
 assert.equal(target.foo, source.foo) // false
 ```
 
-#### arrayStrategy
+### `arrayStrategy`
 
 | Type    | `('PUSH', 'REPLACE')` |
 |---------|-----------------------|
@@ -248,7 +188,7 @@ merge(target, source, {
 console.log(target.foo); // ['Jim', 'Jane', 'Joe', 'Bill', 'Bob']
 ```
 
-#### errorMessage
+### `errorMessage`
 
 | Type    | `(offending: string, suggestion: string) => string` |
 |---------|-----------------------------------------------------|
@@ -275,7 +215,7 @@ function errorMessage(offender, suggestion = '') {
 // TypeError: [MyLibrary] Invalid POST option "cache". Maybe you meant "useCache"?
 ```
 
-#### includeNonEnumerable
+### `includeNonEnumerable`
 
 | Type    | `boolean` |
 |---------|-----------|
@@ -315,7 +255,7 @@ console.log(source.foo); // 'Hello world!'
 console.log(target.foo); // 'Hello world!'
 ```
 
-#### includeReadOnly
+### `includeReadOnly`
 
 | Type    | `boolean` |
 |---------|-----------|
@@ -363,7 +303,7 @@ console.log(source.foo); // 'Hello world!'
 console.log(target.foo); // 'Hello world!'
 ```
 
-#### useReferenceIfArray
+### `useReferenceIfArray`
 
 | Type    | `boolean` |
 |---------|-----------|
@@ -408,7 +348,7 @@ console.log(target.foo); // ['Joe', 'Jill', 'Jim']
 assert.equal(target.foo, source.foo); // true
 ```
 
-#### useReferenceIfTargetUnset
+### `useReferenceIfTargetUnset`
 
 | Type    | `boolean` |
 |---------|-----------|
@@ -459,6 +399,83 @@ merge(target, source, true);
 console.log(target.foo.bar); // {}
 
 assert.equal(target.foo.bar, source.foo.bar); // true
+```
+
+## Library Example
+
+A common pattern in many libraries is to allow the consumer to provide an optional object of configuration options:
+
+```js
+const myWidget = new Widget({
+    option1: true,
+    option2: 300
+});
+```
+
+If we don't validate that input, the consumer is free to provide erroneous configuration options and debugging the resulting problems in behavior becomes hard.
+
+By implementing a sealed configuration class internally with sensible defaults, and merging consumer provided input into it, we can catch erroneous configuration at the point of instantiation and provide developer feedback.
+
+##### ./config.js
+```js
+class Config {
+    constructor() {
+        this.option1 = false;
+        this.option2 = 50;
+
+        Object.seal(this);
+    }
+}
+```
+
+#### ./MyWidget.js
+```js
+class MyWidget {
+    constructor(options={}) {
+        this.config = new Config();
+
+        Object.assign(this.config, options);
+    }
+}
+```
+
+When the consumer provides an option not defined in the config class, a type error will be thrown:
+
+```js
+const myWidget = new Widget({option3: 50});
+
+// TypeError: Cannot add property option3, object is not extensible
+```
+
+Unfortunately, this message is not particularly helpful, and particularly unhelpful for novice developers who may not understand the concept of extensibility. There is where Helpful Merge comes in.
+
+We can replace `Object.assign()` in the above example with Helpful Merge's merge implementation, which provides a helpful and customizable error message with a suggestion of the closest matching property name on the target object:
+
+#### ./MyWidget.js
+```js
+import merge from 'helpful-merge';
+
+class MyWidget {
+    constructor(options={}) {
+        this.config = new Config();
+
+        merge(this.config, options);
+    }
+}
+```
+
+```js
+const myWidget = new Widget({option3: 50});
+
+// TypeError: Unknown property "option3". Did you mean "option2"?
+```
+
+This provides an easy means of catching typos, incorrect casings, or API version mismatches, which in turn provides a great developer experience for consumers of your library or API.
+
+Helpful Merge also allows us to easily customize this error message to further improve the developer experience for your library or API. For example:
+
+```js
+// TypeError: [MyWidget] Invalid configuration option "option3". Did you mean "option2"?
 ```
 
 ---
