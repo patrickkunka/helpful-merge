@@ -1,10 +1,17 @@
 {
   "name": "helpful-merge",
   "version": "0.0.0",
-  "private": true,
+  "description": "A highly-configurable merge implementation with intelligent error handling for validating consumer-provided input against configuration interfaces.",
+  "author": "KunkaLabs Limited",
+  "private": false,
+  "license": "Apache-2.0",
   "main": "./dist/index.js",
-  "types": "./types/index.d.ts",
+  "types": "./dist/index.d.ts",
   "browser": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patrickkunka/helpful-merge/"
+  },
   "scripts": {
     "test:unit": "mocha -r ts-node/register ./test/unit.ts",
     "test": "npm run test:unit",
@@ -12,7 +19,8 @@
     "watch": "tsc --watch",
     "build": "tsc",
     "prepublishOnly": "npm run build",
-    "cover": "nyc mocha ./test/unit.ts"
+    "cover": "nyc mocha ./test/unit.ts",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "nyc": {
     "require": [
@@ -24,7 +32,7 @@
       "text"
     ],
     "extension": [
-        ".ts"
+      ".ts"
     ],
     "exclude": [
       "**/*.d.ts",
@@ -40,6 +48,7 @@
     "@types/mocha": "^2.2.44",
     "chai": "^3.5.0",
     "chai-shallow-deep-equal": "^1.4.0",
+    "coveralls": "^3.0.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.0.2",
     "nyc": "^11.3.0",
