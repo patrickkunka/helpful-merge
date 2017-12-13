@@ -416,7 +416,7 @@ If we don't validate that input, the consumer is free to provide erroneous confi
 
 By implementing a sealed configuration class internally with sensible defaults, and merging consumer provided input into it, we can catch erroneous configuration at the point of instantiation and provide developer feedback.
 
-##### ./config.js
+##### ./Config.js
 ```js
 class Config {
     constructor() {
@@ -428,9 +428,11 @@ class Config {
 }
 ```
 
-#### ./MyWidget.js
+#### ./Widget.js
 ```js
-class MyWidget {
+import Config from './Config.js';
+
+class Widget {
     constructor(options={}) {
         this.config = new Config();
 
@@ -451,11 +453,13 @@ Unfortunately, this message is not particularly helpful, and particularly unhelp
 
 We can replace `Object.assign()` in the above example with Helpful Merge's merge implementation, which provides a helpful and customizable error message with a suggestion of the closest matching property name on the target object:
 
-#### ./MyWidget.js
+#### ./Widget.js
 ```js
 import merge from 'helpful-merge';
 
-class MyWidget {
+import Config from './Config';
+
+class Widget {
     constructor(options={}) {
         this.config = new Config();
 
@@ -463,6 +467,8 @@ class MyWidget {
     }
 }
 ```
+
+Now the consumer will see the following error message:
 
 ```js
 const myWidget = new Widget({option3: 50});
@@ -475,7 +481,7 @@ This provides an easy means of catching typos, incorrect casings, or API version
 Helpful Merge also allows us to easily customize this error message to further improve the developer experience for your library or API. For example:
 
 ```js
-// TypeError: [MyWidget] Invalid configuration option "option3". Did you mean "option2"?
+// TypeError: [Widget] Invalid configuration option "option3". Did you mean "option2"?
 ```
 
 ---
