@@ -1,6 +1,6 @@
 # Helpful Merge
 
-A highly-configurable merge implementation with intelligent error handling for validating consumer-provided input against configuration interfaces at runtime.
+A highly-configurable merge implementation with intelligent error handling for validating consumer-provided input against configuration interfaces.
 
 **TL;DR:**
 
