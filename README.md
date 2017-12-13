@@ -8,9 +8,9 @@ A highly-configurable merge implementation with intelligent error handling for v
 *For example:*
 
 ```js
-const target = {
+const target = Object.seal({
     animationDuration: 50
-};
+});
 
 const source = {
     animatonDuration: 300
