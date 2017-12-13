@@ -27,7 +27,7 @@ Helpful Merge is great for creating robust and helpful entry points for JavaScri
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Options](#options)
+- [Configuration Options](#configuration-options)
 - [Library Example](#library-example)
 
 ## Installation
@@ -63,7 +63,7 @@ The function always returns a reference to the target object.
 merge(target, source, options);
 ```
 
-## Options
+## Configuration Options
 
 The `merge()` function accepts an optional third parameter of configuration options with the following defaults:
 
