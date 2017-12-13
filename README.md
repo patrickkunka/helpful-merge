@@ -209,9 +209,11 @@ The default error message function is as follows:
 
 ##### Example: Implementing a custom error message
 ```js
-function errorMessage(offender, suggestion = '') {
+const errorMessage = (offender, suggestion = '') => {
     return `[MyLibrary] Invalid POST option "${offender}"` + (suggestion ? `. Maybe you you meant "${suggestion}"?` : '');
-}
+};
+
+merge(target, source, {errorMessage});
 
 // TypeError: [MyLibrary] Invalid POST option "cache". Maybe you meant "useCache"?
 ```
