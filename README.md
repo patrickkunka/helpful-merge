@@ -187,6 +187,7 @@ assert.equal(target.foo, source.foo) // true
 ```
 > Shallow merge (default behavior)
 
+
 ```js
 const target = {};
 
@@ -227,6 +228,7 @@ merge(target, source, true);
 console.log(target.foo); // ['Bill', 'Bob', 'Joe'];
 ```
 > Replace strategy (default behavior)
+
 
 ```js
 import merge, {ArrayStrategy} from 'helpful-merge';
@@ -298,6 +300,7 @@ console.log(target.foo); // 'undefined'
 ```
 > Skipping non-enumerable properties (default behavior)
 
+
 ```js
 const target = {};
 const source = {};
@@ -346,6 +349,7 @@ console.log(target.foo); // 'undefined'
 ```
 > Skipping read-only properties (default behavior)
 
+
 ```js
 const target = {};
 const source = {};
@@ -389,6 +393,7 @@ console.log(target.foo); // ['Joe', 'Jill', 'Jim']
 assert.equal(target.foo, source.foo); // false
 ```
 > Deep copying nested arrays (default behavior)
+
 
 ```js
 const target = {};
@@ -441,6 +446,7 @@ console.log(target.foo.bar); // {}
 assert.equal(target.foo.bar, source.foo.bar); // false
 ```
 > Deep copying nested objects/arrays when unset on target (default behavior)
+
 
 ```js
 const target = {
