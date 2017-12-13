@@ -173,6 +173,7 @@ An optional boolean dictating whether or not to perform a deep recursive merge. 
 
 This option may also be set using an alternative shorthand syntax whereby the value `true` is passed as the third parameter instead of `{deep: true}`.
 
+##### Shallow merge (default behavior)
 ```js
 const target = {};
 
@@ -185,9 +186,8 @@ merge(target, source);
 
 assert.equal(target.foo, source.foo) // true
 ```
-> Shallow merge (default behavior)
 
-
+##### Example 2: Deep Merge
 ```js
 const target = {};
 
@@ -200,7 +200,6 @@ merge(target, source, true); // or, merge(target, source, {deep: true});
 
 assert.equal(target.foo, source.foo) // false
 ```
-> Deep merge
 
 #### arrayStrategy
 
@@ -214,6 +213,7 @@ In certain configuration interfaces, where we are may wish to extend some base c
 
 To avoid magic strings, the available values are available via the exported `ArrayStrategy` enum, via `ArrayStrategy.PUSH`, and `ArrayStrategy.REPLACE`.
 
+##### Example 1: Replace strategy (default behavior)
 ```js
 const target = {
     foo: ['Jim', 'Jane', 'Joe']
@@ -227,9 +227,8 @@ merge(target, source, true);
 
 console.log(target.foo); // ['Bill', 'Bob', 'Joe'];
 ```
-> Replace strategy (default behavior)
 
-
+##### Example 2: Push strategy
 ```js
 import merge, {ArrayStrategy} from 'helpful-merge';
 
@@ -248,7 +247,6 @@ merge(target, source, {
 
 console.log(target.foo); // ['Jim', 'Jane', 'Joe', 'Bill', 'Bob']
 ```
-> Push strategy
 
 #### errorMessage
 
@@ -268,6 +266,7 @@ The default error message function is as follows:
 }
 ```
 
+##### Example: Implementing a custom error message
 ```js
 function errorMessage(offender, suggestion = '') {
     return `[MyLibrary] Invalid POST option "${offender}"` + (suggestion ? `. Maybe you you meant "${suggestion}"?` : '');
@@ -275,7 +274,6 @@ function errorMessage(offender, suggestion = '') {
 
 // TypeError: [MyLibrary] Invalid POST option "cache". Maybe you meant "useCache"?
 ```
-> Implementing a custom error message
 
 #### includeNonEnumerable
 
@@ -285,6 +283,7 @@ function errorMessage(offender, suggestion = '') {
 
 An optional boolean dictating whether or not to copy non-enumerable properties on the source object to the target object.
 
+##### Example 1: Skipping non-enumerable properties (default behavior)
 ```js
 const target = {};
 const source = {};
@@ -298,9 +297,8 @@ merge(target, source);
 console.log(source.foo); // 'Hello world!'
 console.log(target.foo); // 'undefined'
 ```
-> Skipping non-enumerable properties (default behavior)
 
-
+##### Example 2: Including non-enumerable properties
 ```js
 const target = {};
 const source = {};
@@ -316,7 +314,6 @@ merge(target, source, {
 console.log(source.foo); // 'Hello world!'
 console.log(target.foo); // 'Hello world!'
 ```
-> Including non-enumerable properties
 
 #### includeReadOnly
 
@@ -328,6 +325,7 @@ An optional boolean dictating whether or not to copy the values of "read-only" p
 
 Typically these would be defined on both the source and target, negating the need to copy them, as their values would be equal on both objects for the same underlying data.
 
+##### Example 1: Skipping read-only properties (default behavior)
 ```js
 const target = {};
 
@@ -347,9 +345,8 @@ merge(target, source);
 console.log(source.fullName); // 'Jill Kay'
 console.log(target.foo); // 'undefined'
 ```
-> Skipping read-only properties (default behavior)
 
-
+##### Example 2: Including read-only properties
 ```js
 const target = {};
 const source = {};
@@ -365,7 +362,6 @@ merge(target, source, {
 console.log(source.foo); // 'Hello world!'
 console.log(target.foo); // 'Hello world!'
 ```
-> Including read-only properties
 
 #### useReferenceIfArray
 
@@ -379,6 +375,7 @@ If set to `true`, the recursive merge will stop at any property who's value is a
 
 This provides an efficient boundary between a defined configuration structure, and consumer-provided array values where reference will suffice, and avoids unnecessary recursion and enumeration.
 
+##### Example 1: Deep copying nested arrays (default behavior)
 ```js
 const target = {};
 
@@ -392,9 +389,8 @@ console.log(target.foo); // ['Joe', 'Jill', 'Jim']
 
 assert.equal(target.foo, source.foo); // false
 ```
-> Deep copying nested arrays (default behavior)
 
-
+##### Example 2: Copying nested arrays by reference
 ```js
 const target = {};
 
@@ -411,7 +407,6 @@ console.log(target.foo); // ['Joe', 'Jill', 'Jim']
 
 assert.equal(target.foo, source.foo); // true
 ```
-> Copying nested arrays by reference
 
 #### useReferenceIfTargetUnset
 
@@ -428,6 +423,7 @@ If set to `true`, the recursive merge will stop at these "leaf" properties and t
 
 This provides an efficient boundary between a defined configuration structure, and consumer-provided hash or typed values where a reference will suffice, and avoids unnecessary recursion and enumeration.
 
+##### Example 1: Deep copying nested objects/arrays when unset on target (default behavior)
 ```js
 const target = {
     foo: {}
@@ -445,9 +441,8 @@ console.log(target.foo.bar); // {}
 
 assert.equal(target.foo.bar, source.foo.bar); // false
 ```
-> Deep copying nested objects/arrays when unset on target (default behavior)
 
-
+##### Example 2: Copying nested objects/arrays by reference when unset on target
 ```js
 const target = {
     foo: {}
@@ -465,7 +460,6 @@ console.log(target.foo.bar); // {}
 
 assert.equal(target.foo.bar, source.foo.bar); // true
 ```
-> Copying nested objects/arrays by reference when unset on target
 
 ---
 
