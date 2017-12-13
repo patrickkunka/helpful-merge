@@ -178,7 +178,9 @@ The function receives two arguments, the key of the offending property, and a su
 The default error message function is as follows:
 
 ```js
-(offender, suggestion='') => `Unknown property "${offender}"` + (suggestion ? `. Did you mean "${suggestion}"?` : '')
+(offender, suggestion='') => {
+    return `Unknown property "${offender}"` + (suggestion ? `. Did you mean "${suggestion}"?` : '');
+}
 ```
 
 #### includeNonEnumerable
@@ -217,8 +219,8 @@ This provides an efficient boundary between a defined configuration structure, a
 |---------|-----------|
 | Default | `false`   |
 
-An optional boolean dictating whether or not to copy nested objects or arrays by reference, under the following circumstances:
-- A deep merge is being performed (via `deep: true`)
+An optional boolean dictating whether or not to copy nested objects or arrays by reference, when the following criteria are met:
+- A deep merge is already being performed (via `deep: true`)
 - The property exists on the source object as a nested object or array
 - The property does not exist on the target object, or is `null` on the target object.
 
