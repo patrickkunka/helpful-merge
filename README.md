@@ -2,7 +2,7 @@
 
 A highly-configurable merge implementation with intelligent error handling for validating consumer-provided input against configuration interfaces at runtime.
 
-TL;DR:
+**TL;DR:**
 
 ```
 Unknown property "animatonDuration". Did you mean "animationDuration"?
@@ -35,7 +35,7 @@ import merge from 'helpful-merge';
 
 Helpful Merge can be used in place of any existing merge implementation such as ES6 `Object.assign()`, lodash/underscore's `merge()`, or jQuery's `$.extend()`.
 
-Unlike `Object.assign()` however, Helpful Merge will only merge one source object into one target object at a time, as its third parameter is reserved for an optional configuration object (see options).
+Unlike `Object.assign()` however, Helpful Merge will only merge one source object into one target object at a time, as its third parameter is reserved for an optional configuration object (see [options](#options)).
 
 The function always returns a reference to the target object.
 
@@ -133,6 +133,16 @@ The most commonly used configuration option `deep`, can be provided in a shortha
 merge(target, source, true);
 ```
 
+Each property is fully documented below:
+
+- [deep](#deep)
+- [arrayStrategy](#arraystrategy)
+- [errorMessage](#errormessage)
+- [includeNonEnumerable](#includenonenumerable)
+- [includeReadOnly](#includereadonly)
+- [useReferenceIfArray](#usereferenceifarray)
+- [useReferenceIfTargetUnset](#usereferenceiftargetunset)
+
 #### deep
 
 | Type    | `boolean` |
@@ -145,9 +155,9 @@ This option may also be set using an alternative shorthand syntax whereby the va
 
 #### arrayStrategy
 
-| Type    | `('PUSH'|'REPLACE')` |
-|---------|----------------------|
-| Default | `'REPLACE'`          |
+| Type    | `('PUSH', 'REPLACE')` |
+|---------|-----------------------|
+| Default | `'REPLACE'`           |
 
 A string dictating the kind of array merge strategy to use when copying the values of one array into another. By default, arrays are merged using the `'REPLACE'` strategy, where each value in the source array overwrite the value of the same index in the target.
 
