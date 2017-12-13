@@ -4,8 +4,18 @@ A highly-configurable merge implementation with intelligent error handling for v
 
 **TL;DR:**
 
-```
-Unknown property "animatonDuration". Did you mean "animationDuration"?
+```js
+const target = {
+    animationDuration: 50
+};
+
+const source = {
+    animatonDuration: 300
+};
+
+merge(target, source);
+
+// TypeError: Unknown property "animatonDuration". Did you mean "animationDuration"?
 ```
 
 Helpful Merge is great for creating robust and helpful entry points for JavaScript libraries and APIs and also includes efficient and customizable implementations of deep recursive merge, array merge, and more.
@@ -74,6 +84,8 @@ class Config {
         Object.seal(this);
     }
 }
+
+...
 
 const config = Object.assign(new Config(), consumerOptions);
 ```
