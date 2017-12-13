@@ -171,7 +171,7 @@ To avoid magic strings, the available values are available via the exported `Arr
 
 | Type    | `(offending: string, suggestion: string) => string` |
 |---------|-----------------------------------------------------|
-| Default | `null`                                              |
+| Default | `Message.MERGE_ERROR`                               |
 
 A optional function with which to override the default error message thrown when a consumer attempts to add undefined properties to a sealed or non-extensible target object.
 
