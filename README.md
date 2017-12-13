@@ -110,7 +110,7 @@ The `merge()` function accepts an optional third parameter of configuration opti
 {
     deep: false,
     arrayStrategy: ArrayStrategy.REPLACE,
-    errorMessage: Messages.MERGE_ERROR
+    errorMessage: Messages.MERGE_ERROR,
     includeNonEnumerable: false,
     includeReadOnly: false
     useReferenceIfArray: false,
@@ -132,6 +132,8 @@ The most commonly used configuration option `deep`, can be provided in a shortha
 ```js
 merge(target, source, true);
 ```
+
+### Available Options
 
 Each property is fully documented below:
 
