@@ -1,10 +1,14 @@
 # Helpful Merge
 
-A highly-configurable merge implementation with helpful error handling for validating consumer-provided input against configuration interfaces at runtime.
+A highly-configurable merge implementation with intelligent error handling for validating consumer-provided input against configuration interfaces at runtime.
 
-Perfect for creating robust and helpful entry points for JavaScript libraries and APIs.
+TL;DR:
 
-Helpful Merge also includes efficient and customizable implementations of deep recursive merge, array merge, and more.
+```
+Unknown property "animatonDuration". Did you mean "animationDuration"?
+```
+
+Helpful Merge is great for creating robust and helpful entry points for JavaScript libraries and APIs and also includes efficient and customizable implementations of deep recursive merge, array merge, and more.
 
 #### Contents
 
@@ -131,10 +135,9 @@ merge(target, source, true);
 
 #### deep
 
-```
-@type:    boolean
-@default: false
-```
+| Type    | `boolean` |
+|---------|-----------|
+| Default | `false`   |
 
 An optional boolean dictating whether or not to perform a deep recursive merge. By default, only a simple shallow merge will be performed.
 
@@ -142,10 +145,9 @@ This option may also be set using an alternative shorthand syntax whereby the va
 
 #### arrayStrategy
 
-```
-@type:    ('PUSH'|'REPLACE')
-@default: 'REPLACE'
-```
+| Type    | `('PUSH'|'REPLACE')` |
+|---------|----------------------|
+| Default | `'REPLACE'`          |
 
 A string dictating the kind of array merge strategy to use when copying the values of one array into another. By default, arrays are merged using the `'REPLACE'` strategy, where each value in the source array overwrite the value of the same index in the target.
 
@@ -155,10 +157,9 @@ To avoid magic strings, the available values are available via the exported `Arr
 
 #### errorMessage
 
-```
-@type:    (offending: string, suggestion: string) => string
-@default: null
-```
+| Type    | `(offending: string, suggestion: string) => string` |
+|---------|-----------------------------------------------------|
+| Default | `null`                                              |
 
 A optional function with which to override the default error message thrown when a consumer attempts to add undefined properties to a sealed or non-extensible target object.
 
@@ -172,19 +173,17 @@ The default error message function is as follows:
 
 #### includeNonEnumerable
 
-```
-@type:    boolean
-@default: false
-```
+| Type    | `boolean` |
+|---------|-----------|
+| Default | `false`   |
 
 An optional boolean dictating whether ot not to copy non-enumerable properties on the source object to the target object.
 
 #### includeReadOnly
 
-```
-@type:    boolean
-@default: false
-```
+| Type    | `boolean` |
+|---------|-----------|
+| Default | `false`   |
 
 An optional boolean dictating whether or not to copy the values of "read-only" properties on the source object to the target object. Read only properties are defined as accessor properties with a "getter", but no "setter".
 
@@ -192,10 +191,9 @@ Typically these would be defined on both the source and target, negating the nee
 
 #### useReferenceIfArray
 
-```
-@type:    boolean
-@default: false
-```
+| Type    | `boolean` |
+|---------|-----------|
+| Default | `false`   |
 
 An optional boolean dictating whether or not to copy nested arrays by reference, when performing a deep merge.
 
@@ -205,10 +203,9 @@ This provides an efficient boundary between a defined configuration structure, a
 
 #### useReferenceIfTargetUnset
 
-```
-@type:    boolean
-@default: false
-```
+| Type    | `boolean` |
+|---------|-----------|
+| Default | `false`   |
 
 An optional boolean dictating whether or not to copy nested objects or arrays by reference, under the following circumstances:
 - A deep merge is being performed (via `deep: true`)
