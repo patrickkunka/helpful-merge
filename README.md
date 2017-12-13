@@ -102,6 +102,12 @@ const config = merge(new Config(), consumerOptions);
 
 This provides an easy means of catching typos, incorrect casings, or API version mismatches, which in turn provides a great developer experience for consumers of your library or API.
 
+Helpful Merge also allows us to easily customize this error message to further improve the developer experience for your library or API. For example:
+
+```js
+// TypeError: [MyWidget] Invalid configuration option "option3". Did you mean "option2"?
+```
+
 ## Options
 
 The `merge()` function accepts an optional third parameter of configuration options with the following defaults:
@@ -151,9 +157,37 @@ Each property is fully documented below:
 |---------|-----------|
 | Default | `false`   |
 
-An optional boolean dictating whether or not to perform a deep recursive merge. By default, only a simple shallow merge will be performed.
+An optional boolean dictating whether or not to perform a deep recursive merge. By default, only a simple shallow merge will be performed, and any properties in the source object with object or array values will be copied to the target by reference only.
 
 This option may also be set using an alternative shorthand syntax whereby the value `true` is passed as the third parameter instead of `{deep: true}`.
+
+```js
+const target = {};
+
+const source = {
+    foo: {},
+    bar: false
+};
+
+merge(target, source);
+
+assert.equal(target.foo, source.foo) // true
+```
+> Shallow merge (default behavior)
+
+```js
+const target = {};
+
+const source = {
+    foo: {},
+    bar: false
+};
+
+merge(target, source, true); // or, merge(target, source, {deep: true});
+
+assert.equal(target.foo, source.foo) // false
+```
+> Deep merge
 
 #### arrayStrategy
 
@@ -166,6 +200,41 @@ A string dictating the kind of array merge strategy to use when copying the valu
 In certain configuration interfaces, where we are may wish to extend some base configuration with additional values, a `'PUSH'` strategy may be preferable. In this case, the values of the source array are pushed on to the target array, and no data is overwritten.
 
 To avoid magic strings, the available values are available via the exported `ArrayStrategy` enum, via `ArrayStrategy.PUSH`, and `ArrayStrategy.REPLACE`.
+
+```js
+const target = {
+    foo: ['Jim', 'Jane', 'Joe']
+};
+
+const source = {
+    foo: ['Bill', 'Bob']
+};
+
+merge(target, source, true);
+
+console.log(target.foo); // ['Bill', 'Bob', 'Joe'];
+```
+> Replace strategy (default behavior)
+
+```js
+import merge, {ArrayStrategy} from 'helpful-merge';
+
+const target = {
+    foo: ['Jim', 'Jane', 'Joe']
+};
+
+const source = {
+    foo: ['Bill', 'Bob']
+};
+
+merge(target, source, {
+    deep: true,
+    arrayStrategy: ArrayStrategy.PUSH
+});
+
+console.log(target.foo); // ['Jim', 'Jane', 'Joe', 'Bill', 'Bob']
+```
+> Push strategy
 
 #### errorMessage
 
@@ -180,10 +249,19 @@ The function receives two arguments, the key of the offending property, and a su
 The default error message function is as follows:
 
 ```js
-(offender, suggestion='') => {
+(offender, suggestion = '') => {
     return `Unknown property "${offender}"` + (suggestion ? `. Did you mean "${suggestion}"?` : '');
 }
 ```
+
+```js
+function errorMessage(offender, suggestion = '') {
+    return `[MyLibrary] Invalid POST option "${offender}"` + (suggestion ? `. Maybe you you meant "${suggestion}"?` : '');
+}
+
+// TypeError: [MyLibrary] Invalid POST option "cache". Maybe you meant "useCache"?
+```
+> Implementing a custom error message
 
 #### includeNonEnumerable
 
@@ -191,7 +269,39 @@ The default error message function is as follows:
 |---------|-----------|
 | Default | `false`   |
 
-An optional boolean dictating whether ot not to copy non-enumerable properties on the source object to the target object.
+An optional boolean dictating whether or not to copy non-enumerable properties on the source object to the target object.
+
+```js
+const target = {};
+const source = {};
+
+Object.defineProperty(source, 'foo', {
+    value: 'Hello world!'
+});
+
+merge(target, source);
+
+console.log(source.foo); // 'Hello world!'
+console.log(target.foo); // 'undefined'
+```
+> Skipping non-enumerable properties (default behavior)
+
+```js
+const target = {};
+const source = {};
+
+Object.defineProperty(source, 'foo', {
+    value: 'Hello world!'
+});
+
+merge(target, source, {
+    includeNonEnumerable: true
+});
+
+console.log(source.foo); // 'Hello world!'
+console.log(target.foo); // 'Hello world!'
+```
+> Including non-enumerable properties
 
 #### includeReadOnly
 
@@ -202,6 +312,44 @@ An optional boolean dictating whether ot not to copy non-enumerable properties o
 An optional boolean dictating whether or not to copy the values of "read-only" properties on the source object to the target object. Read only properties are defined as accessor properties with a "getter", but no "setter".
 
 Typically these would be defined on both the source and target, negating the need to copy them, as their values would be equal on both objects for the same underlying data.
+
+```js
+const target = {};
+
+const source = {
+    firstName: 'Jill',
+    lastName: 'Kay'
+};
+
+Object.defineProperty(source, 'fullName', {
+    get() => {
+        return this.firstName + this.lastName
+    }
+});
+
+merge(target, source);
+
+console.log(source.fullName); // 'Jill Kay'
+console.log(target.foo); // 'undefined'
+```
+> Skipping read-only properties (default behavior)
+
+```js
+const target = {};
+const source = {};
+
+Object.defineProperty(source, 'foo', {
+    value: 'Hello world!'
+});
+
+merge(target, source, {
+    includeReadOnly: true
+});
+
+console.log(source.foo); // 'Hello world!'
+console.log(target.foo); // 'Hello world!'
+```
+> Including read-only properties
 
 #### useReferenceIfArray
 
@@ -214,6 +362,39 @@ An optional boolean dictating whether or not to copy nested arrays by reference,
 If set to `true`, the recursive merge will stop at any property who's value is an array, and copy it by reference to the target object.
 
 This provides an efficient boundary between a defined configuration structure, and consumer-provided array values where reference will suffice, and avoids unnecessary recursion and enumeration.
+
+```js
+const target = {};
+
+const source = {
+    foo: ['Joe', 'Jill', 'Jim']
+};
+
+merge(source, target, true);
+
+console.log(target.foo); // ['Joe', 'Jill', 'Jim']
+
+assert.equal(target.foo, source.foo); // false
+```
+> Deep copying nested arrays (default behavior)
+
+```js
+const target = {};
+
+const source = {
+    foo: ['Joe', 'Jill', 'Jim']
+};
+
+merge(source, target, {
+    deep: true,
+    useReferenceIfArray: true
+});
+
+console.log(target.foo); // ['Joe', 'Jill', 'Jim']
+
+assert.equal(target.foo, source.foo); // true
+```
+> Copying nested arrays by reference
 
 #### useReferenceIfTargetUnset
 
@@ -230,6 +411,43 @@ If set to `true`, the recursive merge will stop at these "leaf" properties and t
 
 This provides an efficient boundary between a defined configuration structure, and consumer-provided hash or typed values where a reference will suffice, and avoids unnecessary recursion and enumeration.
 
+```js
+const target = {
+    foo: {}
+};
+
+const source = {
+    foo: {
+        bar: {}
+    }
+};
+
+merge(target, source, true);
+
+console.log(target.foo.bar); // {}
+
+assert.equal(target.foo.bar, source.foo.bar); // false
+```
+> Deep copying nested objects/arrays when unset on target (default behavior)
+
+```js
+const target = {
+    foo: {}
+};
+
+const source = {
+    foo: {
+        bar: {}
+    }
+};
+
+merge(target, source, true);
+
+console.log(target.foo.bar); // {}
+
+assert.equal(target.foo.bar, source.foo.bar); // true
+```
+> Copying nested objects/arrays by reference when unset on target
 
 ---
 

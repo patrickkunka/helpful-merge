@@ -4,6 +4,15 @@ import handleMergeError from './handleMergeError';
 import IConfig          from './Interfaces/IConfig';
 import * as Messages    from './Messages';
 
+/**
+ * Merges the properties of a source object into a target object.
+ *
+ * @param  {any}          target  The target object to be merged into.
+ * @param  {any}          source  The source object containing the properties to be copied.
+ * @param  {IConfig|true} options An optional configuration object, or `true` as a shorthand for `{deep: true}`.
+ * @return {any}          A reference to the modified target object.
+ */
+
 function merge(target: any, source: any, options: IConfig|true = {}): any {
     let sourceKeys: string[] = [];
     let config: Config;

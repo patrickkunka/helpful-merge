@@ -142,8 +142,7 @@ describe('merge()', () => {
         const obj2: any = {};
 
         Object.defineProperty(obj2, 'bar', {
-            get: () => 'baz',
-            set: () => { /**/ }
+            value: 'Hello world!'
         });
 
         merge(obj1, obj2);
@@ -157,12 +156,11 @@ describe('merge()', () => {
         const obj2: any = {};
 
         Object.defineProperty(obj2, 'bar', {
-            get: () => 'baz'
+            value: 'Hello world!'
         });
 
         merge(obj1, obj2, {
-            includeNonEmurable: true,
-            includeReadOnly: true
+            includeNonEmurable: true
         });
 
         assert.isDefined(obj2.bar);
