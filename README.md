@@ -148,11 +148,11 @@ assert.equal(target.foo, source.foo) // false
 |---------|-----------------------|
 | Default | `'REPLACE'`           |
 
-A string dictating the kind of array merge strategy to use when copying the values of one array into another. By default, arrays are merged using the `'REPLACE'` strategy, where each value in the source array overwrite the value of the same index in the target.
+A string dictating the kind of array merge strategy to use when copying the values of one array into another. By default, arrays are merged using the `'REPLACE'` strategy, where each value in the source array overwrites the value of the same index in the target.
 
 In certain configuration interfaces, where we are may wish to extend some base configuration with additional values, a `'PUSH'` strategy may be preferable. In this case, the values of the source array are pushed on to the target array, and no data is overwritten.
 
-To avoid magic strings, the available values are available via the exported `ArrayStrategy` enum, via `ArrayStrategy.PUSH`, and `ArrayStrategy.REPLACE`.
+To avoid magic strings, the possible values are available via the exported `ArrayStrategy` enum, via `ArrayStrategy.PUSH`, and `ArrayStrategy.REPLACE`.
 
 ##### Example 1: Replace strategy (default behavior)
 ```js
