@@ -96,8 +96,6 @@ merge(target, source, true);
 
 ### Available Options
 
-Each property is fully documented below:
-
 - [deep](#deep)
 - [arrayStrategy](#arraystrategy)
 - [errorMessage](#errormessage)
