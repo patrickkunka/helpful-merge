@@ -5,7 +5,7 @@
 
 A highly-configurable merge implementation with intelligent error handling for validating consumer-provided input against configuration interfaces.
 
-**TL;DR:**
+*For example:*
 
 ```js
 const target = {
