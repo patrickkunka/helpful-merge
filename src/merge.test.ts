@@ -1,6 +1,6 @@
 import * as chai     from 'chai';
 import ArrayStrategy from './Constants/ArrayStrategy';
-import merge         from './merge';
+import merge         from './index';
 import * as Messages from './Messages';
 
 const assert = chai.assert;
@@ -142,7 +142,8 @@ describe('merge()', () => {
         const obj2: any = {};
 
         Object.defineProperty(obj2, 'bar', {
-            get: () => 'baz'
+            get: () => 'baz',
+            set: () => { /**/ }
         });
 
         merge(obj1, obj2);
@@ -353,5 +354,49 @@ describe('merge()', () => {
         };
 
         assert.throws(() => merge(obj1, obj2, config), 'Invalid configuration option "bar". Did you mean "FooBarCar"?');
+    });
+
+    it('should rethrow type errors not related extensibility', () => {
+        const obj1: any = {};
+        const obj2: any = {};
+
+        Object.defineProperties(obj2, {
+            foo: {
+                enumerable: true,
+                get: () => {
+                    throw new TypeError('Test error');
+                },
+                set: (val) => void(0)
+            }
+        });
+
+        assert.throws(() => merge(obj1, obj2), 'Test error');
+    });
+
+    it(`should instantiate a new object on the target for nested object
+    properties that only exist on the source`, () => {
+        const obj1: any = {};
+        const obj2: any = {
+            foo: {}
+        };
+
+        merge(obj1, obj2, true);
+
+        assert.isDefined(obj1.foo);
+        assert.notEqual(obj1.foo, obj2.foo);
+    });
+
+    it(`should instantiate a new array on the target for nested array
+    properties that only exist on the source`, () => {
+        const obj1: any = {};
+        const obj2: any = {
+            foo: []
+        };
+
+        merge(obj1, obj2, true);
+
+        assert.isDefined(obj1.foo);
+        assert.isArray(obj1.foo);
+        assert.notEqual(obj1.foo, obj2.foo);
     });
 });

@@ -81,6 +81,10 @@ export function getTotalMatching(possibleKey: string, offendingKey: string): num
             lastCommonIndex = leftPointer;
             leftTotalMatching++;
             leftInnerPointer++;
+
+            // Whole word matched, end
+
+            if (leftTotalMatching === shorter.length) break;
         } else if (leftTotalMatching > 1) {
             // No match, but at least two common characters found, end
 
@@ -125,7 +129,7 @@ export function getTotalMatching(possibleKey: string, offendingKey: string): num
         }
     }
 
-    return leftTotalMatching + rightTotalMatching;
+    return Math.min(shorter.length, leftTotalMatching + rightTotalMatching);
 }
 
 export default handleMergeError;

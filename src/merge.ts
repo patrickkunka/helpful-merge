@@ -44,7 +44,7 @@ function merge(target: any, source: any, options: IConfig|true = {}): any {
         for (let i = 0; i < source.length; i++) {
             sourceKeys.push(i.toString());
         }
-    } else if (source) {
+    } else {
         sourceKeys = Object.getOwnPropertyNames(source);
     }
 

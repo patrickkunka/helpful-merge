@@ -46,4 +46,10 @@ describe('getTotalMatching()', () => {
 
         assert.equal(total, 8);
     });
+
+    it(`should not sum groups of common characters that appear multiple times`, () => {
+        const total = getTotalMatching('foo', 'fooBarfooBaroo');
+
+        assert.equal(total, 3);
+    });
 });
