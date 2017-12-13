@@ -1,6 +1,6 @@
 {
   "name": "helpful-merge",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A highly-configurable merge implementation with intelligent error handling for validating consumer-provided input against configuration interfaces.",
   "author": "KunkaLabs Limited",
   "private": false,
