@@ -8,6 +8,8 @@ A highly-configurable merge implementation with intelligent error handling for v
 *For example:*
 
 ```js
+import merge from 'helpful-merge';
+
 const target = Object.seal({
     animationDuration: 50
 });
