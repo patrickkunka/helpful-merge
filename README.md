@@ -50,20 +50,22 @@ import merge from 'helpful-merge';
 
 Helpful Merge can be used in place of any existing merge implementation such as ES6 `Object.assign()`, lodash/underscore's `merge()`, or jQuery's `$.extend()`.
 
-Unlike `Object.assign()` however, Helpful Merge will only merge one source object into one target object at a time, as its third parameter is reserved for an optional configuration object (see [options](#options)).
+Unlike `Object.assign()` however, Helpful Merge will only merge **one source object** into one target object at a time, as its third parameter is reserved for an optional configuration object (see [options](#options)).
 
 The function always returns a reference to the target object.
 
-```js
-/**
- * @param  {any}         target
- * @param  {any}         source
- * @param  {object|true} [options]
- * @return {any}         target
- */
+#### Syntax
 
+```js
 merge(target, source, options);
 ```
+
+|        | Name     | Type  |
+|--------|----------|-------|
+| param  | target   | `any` |
+| param  | source   | `any` |
+| param  | options? | `IConfig&#124;true` |
+| return | target   | `any` |
 
 ## Configuration Options
 
@@ -146,9 +148,9 @@ assert.equal(target.foo, source.foo) // false
 
 ### `arrayStrategy`
 
-| Type    | `('PUSH', 'REPLACE')` |
-|---------|-----------------------|
-| Default | `'REPLACE'`           |
+| Type    | `'PUSH'&#124;'REPLACE'` |
+|---------|-------------------------|
+| Default | `'REPLACE'`             |
 
 A string dictating the kind of array merge strategy to use when copying the values of one array into another. By default, arrays are merged using the `'REPLACE'` strategy, where each value in the source array overwrites the value of the same index in the target.
 
