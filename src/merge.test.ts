@@ -1,6 +1,8 @@
+import './index';
+
 import * as chai     from 'chai';
 import ArrayStrategy from './Constants/ArrayStrategy';
-import merge         from './index';
+import merge         from './merge';
 import * as Messages from './Messages';
 
 const assert = chai.assert;
