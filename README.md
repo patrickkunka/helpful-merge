@@ -154,7 +154,7 @@ assert.equal(target.foo, source.foo) // false
 
 ### `arrayStrategy`
 
-|||
+| | |
 | Type    | <code>'PUSH'&#124;'REPLACE'</code> |
 |---------|-------------------------|
 | Default | `'REPLACE'`             |
