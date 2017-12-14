@@ -1,2 +1,7 @@
+import merge from './merge';
+
 export {default as ArrayStrategy} from './Constants/ArrayStrategy';
-export {default} from './merge';
+
+export default merge;
+
+module.exports = merge;
