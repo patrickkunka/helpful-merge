@@ -64,7 +64,7 @@ merge(target, source, options);
 |--------|----------|-------|
 | param  | target   | `any` |
 | param  | source   | `any` |
-| param  | options? | `IConfig&#124;true` |
+| param  | options? | <code>IConfig&#124;true</code> |
 | return | target   | `any` |
 
 ## Configuration Options
@@ -148,7 +148,7 @@ assert.equal(target.foo, source.foo) // false
 
 ### `arrayStrategy`
 
-| Type    | `'PUSH'&#124;'REPLACE'` |
+| Type    | <code>'PUSH'&#124;'REPLACE'</code> |
 |---------|-------------------------|
 | Default | `'REPLACE'`             |
 
