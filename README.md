@@ -57,7 +57,7 @@ The function always returns a reference to the target object.
 #### Syntax
 
 ```js
-merge(target, source, options);
+merge(target, source, options?);
 ```
 
 |        | Name     | Type  |
@@ -110,6 +110,7 @@ merge(target, source, true);
 
 ### `deep`
 
+|||
 | Type    | `boolean` |
 |---------|-----------|
 | Default | `false`   |
@@ -129,6 +130,8 @@ const source = {
 
 merge(target, source);
 
+console.log(target.foo); // {}
+
 assert.equal(target.foo, source.foo) // true
 ```
 
@@ -141,13 +144,17 @@ const source = {
     bar: false
 };
 
-merge(target, source, true); // or, merge(target, source, {deep: true});
+merge(target, source, {deep: true});
+// ^ or, shorthand form: merge(target, source, true);
+
+console.log(target.foo); // {}
 
 assert.equal(target.foo, source.foo) // false
 ```
 
 ### `arrayStrategy`
 
+|||
 | Type    | <code>'PUSH'&#124;'REPLACE'</code> |
 |---------|-------------------------|
 | Default | `'REPLACE'`             |
@@ -195,6 +202,7 @@ console.log(target.foo); // ['Jim', 'Jane', 'Joe', 'Bill', 'Bob']
 
 ### `errorMessage`
 
+|||
 | Type    | `(offending: string, suggestion: string) => string` |
 |---------|-----------------------------------------------------|
 | Default | `Message.MERGE_ERROR`                               |
@@ -224,6 +232,7 @@ merge(target, source, {errorMessage});
 
 ### `includeNonEnumerable`
 
+|||
 | Type    | `boolean` |
 |---------|-----------|
 | Default | `false`   |
@@ -264,6 +273,7 @@ console.log(target.foo); // 'Hello world!'
 
 ### `includeReadOnly`
 
+|||
 | Type    | `boolean` |
 |---------|-----------|
 | Default | `false`   |
@@ -318,6 +328,7 @@ console.log(target.foo); // 'Jill Kay'
 
 ### `useReferenceIfArray`
 
+|||
 | Type    | `boolean` |
 |---------|-----------|
 | Default | `false`   |
@@ -363,6 +374,7 @@ assert.equal(target.foo, source.foo); // true
 
 ### `useReferenceIfTargetUnset`
 
+|||
 | Type    | `boolean` |
 |---------|-----------|
 | Default | `false`   |
