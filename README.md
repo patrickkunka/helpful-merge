@@ -292,18 +292,24 @@ console.log(target.foo); // 'undefined'
 ##### Example 2: Including read-only properties
 ```js
 const target = {};
-const source = {};
 
-Object.defineProperty(source, 'foo', {
-    value: 'Hello world!'
+const source = {
+    firstName: 'Jill',
+    lastName: 'Kay'
+};
+
+Object.defineProperty(source, 'fullName', {
+    get() => {
+        return this.firstName + this.lastName
+    }
 });
 
 merge(target, source, {
     includeReadOnly: true
 });
 
-console.log(source.foo); // 'Hello world!'
-console.log(target.foo); // 'Hello world!'
+console.log(source.foo); // 'Jill Kay'
+console.log(target.foo); // 'Jill Kay'
 ```
 
 ### `useReferenceIfArray`
