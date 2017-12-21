@@ -5,19 +5,23 @@
 
 A highly-configurable merge implementation with intelligent error handling for validating consumer-provided input against configuration interfaces.
 
-*For example:*
+For example, consider the following common scenario of a consumer misspelling properties on a configuration interface:
 
 ```js
 import merge from 'helpful-merge';
 
+// Configuration interface with defaults:
 const target = Object.seal({
     animationDuration: 50
+    easing: 'ease-in-out'
 });
 
+// Consumer-provided options:
 const source = {
     animatonDuration: 300
 };
 
+// Merge consumer options over defaults:
 merge(target, source);
 
 // TypeError: Unknown property "animatonDuration". Did you mean "animationDuration"?
