@@ -24,7 +24,8 @@ const source = {
 // Merge consumer options over defaults:
 merge(target, source);
 ```
-Result:
+For the above example, Helpful Merge would throw the following exception:
+
 **TypeError: Unknown property "animatonDuration". Did you mean "animationDuration"?**
 
 Helpful Merge is great for creating robust and helpful entry points for JavaScript libraries and APIs and also includes efficient and customizable implementations of deep recursive merge, array merge, and more.
