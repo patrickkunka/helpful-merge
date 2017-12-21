@@ -478,9 +478,9 @@ const myWidget = new Widget({option3: 50});
 // TypeError: Cannot add property option3, object is not extensible
 ```
 
-Unfortunately, this message is not particularly helpful, and particularly unhelpful for novice developers who may not understand the concept of extensibility. There is where Helpful Merge comes in.
+Unfortunately, this message is not particularly helpful novice developers who may not understand the concept of extensibility or for anyone developing without intellisense, which depending on your library's target demographic, may be the majority of users. There is where Helpful Merge comes in.
 
-We can replace `Object.assign()` in the above example with Helpful Merge's merge implementation, which provides a helpful and customizable error message with a suggestion of the closest matching property name on the target object:
+We can replace `Object.assign()` in the above example with Helpful Merge's `merge()` implementation, which provides a helpful and customizable error message with a suggestion of the closest matching property name on the target object:
 
 #### ./Widget.js
 ```js
@@ -505,7 +505,7 @@ const myWidget = new Widget({option3: 50});
 // TypeError: Unknown property "option3". Did you mean "option2"?
 ```
 
-This provides an easy means of catching typos, incorrect casings, or API version mismatches, which in turn provides a great developer experience for consumers of your library or API.
+This provides an easy means of catching typos, incorrect casing, or API version mismatches, which in turn provides a great developer experience for consumers of your library or API.
 
 Helpful Merge also allows us to easily customize this error message to further improve the developer experience for your library or API. For example:
 
