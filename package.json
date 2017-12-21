@@ -18,7 +18,7 @@
     "lint": "tslint -c tslint.json './src/**/*.ts'",
     "watch": "tsc --watch",
     "build": "tsc",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "npm run test && npm run build",
     "cover": "nyc mocha ./test/unit.ts",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
