@@ -23,9 +23,9 @@ const source = {
 
 // Merge consumer options over defaults:
 merge(target, source);
-
-// TypeError: Unknown property "animatonDuration". Did you mean "animationDuration"?
 ```
+Result:
+**TypeError: Unknown property "animatonDuration". Did you mean "animationDuration"?**
 
 Helpful Merge is great for creating robust and helpful entry points for JavaScript libraries and APIs and also includes efficient and customizable implementations of deep recursive merge, array merge, and more.
 
