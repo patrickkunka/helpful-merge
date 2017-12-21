@@ -479,7 +479,7 @@ const myWidget = new Widget({option3: 50});
 // TypeError: Cannot add property option3, object is not extensible
 ```
 
-Unfortunately, this message is not particularly helpful novice developers who may not understand the concept of extensibility or for anyone developing without intellisense, which depending on your library's target demographic, may be the majority of users. There is where Helpful Merge comes in.
+Unfortunately, this message is not particularly helpful novice developers who may not understand the concept of extensibility, nor is it particularly helpful for developers without intellisense who are forced to debug at runtime, which depending on your library's target demographic, could be the majority of users. There is where Helpful Merge comes in.
 
 We can replace `Object.assign()` in the above example with Helpful Merge's `merge()` implementation, which provides a helpful and customizable error message with a suggestion of the closest matching property name on the target object:
 
