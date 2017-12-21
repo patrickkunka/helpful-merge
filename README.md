@@ -16,7 +16,7 @@ const target = Object.seal({
     easing: 'ease-in-out'
 });
 
-// Consumer-provided options:
+// Arbitrary consumer-provided options:
 const source = {
     animatonDuration: 300
 };
