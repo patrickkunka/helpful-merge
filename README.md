@@ -13,7 +13,7 @@ import merge from 'helpful-merge';
 // Configuration interface with defaults:
 const target = Object.seal({
     foo: 50
-    bar: 'ease-in-out'
+    bar: false
 });
 
 // Arbitrary consumer-provided options:
