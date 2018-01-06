@@ -13,7 +13,7 @@ import * as Messages    from './Messages';
  * @return {any}          A reference to the modified target object.
  */
 
-function merge(target: any, source: any, options: IConfig|true = {}): any {
+function merge(target: any, source: any, options: (IConfig|true) = {}): any {
     let sourceKeys: string[] = [];
     let config: Config;
 
