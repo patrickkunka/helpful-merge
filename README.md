@@ -12,13 +12,13 @@ import merge from 'helpful-merge';
 
 // Configuration interface with defaults:
 const target = Object.seal({
-    animationDuration: 50
-    easing: 'ease-in-out'
+    foo: 50
+    bar: false
 });
 
 // Arbitrary consumer-provided options:
 const source = {
-    animatonDuration: 300
+    Foo: 300
 };
 
 // Merge consumer options over defaults:
@@ -26,7 +26,7 @@ merge(target, source);
 ```
 For the above example, Helpful Merge would throw the following exception:
 
-**TypeError: Unknown property "animatonDuration". Did you mean "animationDuration"?**
+**TypeError: Unknown property "Foo". Did you mean "foo"?**
 
 Helpful Merge is great for creating robust and helpful entry points for JavaScript libraries and APIs and also includes efficient and customizable implementations of deep recursive merge, array merge, and more.
 
