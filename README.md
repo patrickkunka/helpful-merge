@@ -3,6 +3,7 @@
 [![Build Status](https://img.shields.io/travis/patrickkunka/helpful-merge.svg?style=flat-square)](https://travis-ci.org/patrickkunka/helpful-merge)
 [![Coverage Status](https://img.shields.io/coveralls/patrickkunka/helpful-merge.svg?style=flat-square)](https://coveralls.io/github/patrickkunka/helpful-merge)
 [![Latest Release](https://img.shields.io/npm/v/helpful-merge.svg?style=flat-square)](https://www.npmjs.com/package/helpful-merge)
+[![Apache License](https://img.shields.io/npm/l/helpful-merge.svg?style=flat-square)](https://www.apache.org/licenses/)
 
 A highly-configurable merge implementation with intelligent error handling (suggestions) for validating consumer-provided input against configuration interfaces.
 
