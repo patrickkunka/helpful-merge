@@ -117,10 +117,9 @@ merge(target, source, true);
 
 ### `deep`
 
-| | |
-|-|-|
-| Type    | `boolean` |
-| Default | `false`   |
+| Type      | Default |
+|-----------|---------|
+| `boolean` | `false` |
 
 An optional boolean dictating whether or not to perform a deep recursive merge. By default, only a simple shallow merge will be performed, and any properties in the source object with object or array values will be copied to the target by reference only.
 
@@ -161,10 +160,9 @@ assert.equal(target.foo, source.foo) // false
 
 ### `arrayStrategy`
 
-| | |
-|-|-|
-| Type    | <code>'PUSH'&#124;'REPLACE'</code> |
-| Default | `'REPLACE'`             |
+| Type | Default |
+|------|---------|
+| <code>'PUSH'&#124;'REPLACE'</code> | `'REPLACE'` |
 
 A string dictating the kind of array merge strategy to use when copying the values of one array into another. By default, arrays are merged using the `'REPLACE'` strategy, where each value in the source array overwrites the value of the same index in the target.
 
@@ -209,10 +207,11 @@ console.log(target.foo); // ['Jim', 'Jane', 'Joe', 'Bill', 'Bob']
 
 ### `errorMessage`
 
-| | |
-|-|-|
-| Type    | `(offending: string, suggestion: string) => string` |
-| Default | `Message.MERGE_ERROR`                               |
+
+
+| Type | Default |
+|------|---------|
+| `(offending: string, suggestion: string) => string` | `Message.MERGE_ERROR` |
 
 A optional function with which to override the default error message thrown when a consumer attempts to add undefined properties to a sealed or non-extensible target object.
 
@@ -239,10 +238,9 @@ merge(target, source, {errorMessage});
 
 ### `includeNonEnumerable`
 
-| | |
-|-|-|
-| Type    | `boolean` |
-| Default | `false`   |
+| Type      | Default |
+|-----------|---------|
+| `boolean` | `false` |
 
 An optional boolean dictating whether or not to copy non-enumerable properties on the source object to the target object.
 
@@ -252,7 +250,8 @@ const target = {};
 const source = {};
 
 Object.defineProperty(source, 'foo', {
-    value: 'Hello world!'
+    value: 'Hello world!',
+    enumerable: false
 });
 
 merge(target, source);
@@ -267,7 +266,8 @@ const target = {};
 const source = {};
 
 Object.defineProperty(source, 'foo', {
-    value: 'Hello world!'
+    value: 'Hello world!',
+    enumerable: false
 });
 
 merge(target, source, {
@@ -280,10 +280,9 @@ console.log(target.foo); // 'Hello world!'
 
 ### `includeReadOnly`
 
-| | |
-|-|-|
-| Type    | `boolean` |
-| Default | `false`   |
+| Type      | Default |
+|-----------|---------|
+| `boolean` | `false` |
 
 An optional boolean dictating whether or not to copy the values of "read-only" properties on the source object to the target object. Read only properties are defined as accessor properties with a "getter", but no "setter".
 
@@ -299,7 +298,7 @@ const source = {
 };
 
 Object.defineProperty(source, 'fullName', {
-    get() => {
+    get() {
         return this.firstName + this.lastName
     }
 });
@@ -320,7 +319,7 @@ const source = {
 };
 
 Object.defineProperty(source, 'fullName', {
-    get() => {
+    get() {
         return this.firstName + this.lastName
     }
 });
@@ -335,10 +334,9 @@ console.log(target.foo); // 'Jill Kay'
 
 ### `useReferenceIfArray`
 
-| | |
-|-|-|
-| Type    | `boolean` |
-| Default | `false`   |
+| Type      | Default |
+|-----------|---------|
+| `boolean` | `false` |
 
 An optional boolean dictating whether or not to copy nested arrays by reference, when performing a deep merge.
 
@@ -381,10 +379,9 @@ assert.equal(target.foo, source.foo); // true
 
 ### `useReferenceIfTargetUnset`
 
-| | |
-|-|-|
-| Type    | `boolean` |
-| Default | `false`   |
+| Type      | Default |
+|-----------|---------|
+| `boolean` | `false` |
 
 An optional boolean dictating whether or not to copy nested objects or arrays by reference, when the following criteria are met:
 - A deep merge is already being performed (via `deep: true`)
