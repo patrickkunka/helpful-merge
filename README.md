@@ -1,7 +1,8 @@
 # Helpful Merge
 
-[![Build Status](https://travis-ci.org/patrickkunka/helpful-merge.svg)](https://travis-ci.org/patrickkunka/helpful-merge)
-[![Coverage Status](https://coveralls.io/repos/github/patrickkunka/helpful-merge/badge.svg)](https://coveralls.io/github/patrickkunka/helpful-merge)
+[![Build Status](https://img.shields.io/travis/patrickkunka/helpful-merge.svg?style=flat-square)](https://travis-ci.org/patrickkunka/helpful-merge)
+[![Coverage Status](https://img.shields.io/coveralls/patrickkunka/helpful-merge.svg?style=flat-square)](https://coveralls.io/github/patrickkunka/helpful-merge)
+[![Latest Release](https://img.shields.io/npm/v/helpful-merge.svg?style=flat-square)](https://www.npmjs.com/package/helpful-merge)
 
 A highly-configurable merge implementation with intelligent error handling (suggestions) for validating consumer-provided input against configuration interfaces.
 
