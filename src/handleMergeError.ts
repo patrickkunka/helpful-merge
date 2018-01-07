@@ -2,7 +2,7 @@ import IBestMatch         from './Interfaces/IBestMatch';
 import IMergeErrorMessage from './Interfaces/IMergeMessage';
 
 function handleMergeError(err: Error, target: any, offendingKey: string, message: IMergeErrorMessage) {
-    // Rethrow if:
+    // Rethrow if any of the following:
     // - offending key already exists on target
     // - object not sealed
     // - is extensible
@@ -15,32 +15,43 @@ function handleMergeError(err: Error, target: any, offendingKey: string, message
         !(err instanceof TypeError)
     ) throw err;
 
-    const offendingKeyLower = offendingKey.toLowerCase();
+    const reducer = reduceBestMatch.bind(null, offendingKey, offendingKey.toLowerCase());
+    const primer: IBestMatch = {key: '', delta: Infinity, totalMatching: 0};
 
-    // Iterate through keys in target
+    // Iterate through keys in target, for each key, compare with
+    // the offending key. Greatest number of matching characters wins.
 
-    // For each key, compare with the offending key
-
-    const bestMatch: IBestMatch = Object.keys(target).reduce((currBestMatch: IBestMatch, currKey: string) => {
-        const totalMatching = getTotalMatching(currKey.toLowerCase(), offendingKeyLower);
-        const delta = Math.abs(currKey.length - offendingKey.length);
-
-        if (
-            totalMatching > currBestMatch.totalMatching ||
-            (totalMatching === currBestMatch.totalMatching && delta < currBestMatch.delta)
-        ) {
-            // If a greater number of matching characters, or the same
-            // number, but a lesser delta, usurp the best match
-
-            return {key: currKey, delta, totalMatching};
-        }
-
-        return currBestMatch;
-    }, {key: '', delta: Infinity, totalMatching: 0});
+    const bestMatch: IBestMatch = Object.keys(target).reduce(reducer, primer);
 
     const suggestion = bestMatch && bestMatch.totalMatching > 1 ? bestMatch.key : '';
 
     throw new TypeError(message(offendingKey, suggestion));
+}
+
+/**
+ * Compares current key with current best match.
+ */
+
+function reduceBestMatch(
+    offendingKeyLower: string,
+    offendingKey:      string,
+    currBestMatch:     IBestMatch,
+    currKey:           string
+): IBestMatch {
+    const totalMatching = getTotalMatching(currKey.toLowerCase(), offendingKeyLower);
+    const delta = Math.abs(currKey.length - offendingKey.length);
+
+    if (
+        totalMatching > currBestMatch.totalMatching ||
+        (totalMatching === currBestMatch.totalMatching && delta < currBestMatch.delta)
+    ) {
+        // If a greater number of matching characters, or the same
+        // number, but a lesser delta, usurp the best match
+
+        return {key: currKey, delta, totalMatching};
+    }
+
+    return currBestMatch;
 }
 
 /**
