@@ -307,7 +307,7 @@ Object.defineProperty(source, 'fullName', {
 merge(target, source);
 
 console.log(source.fullName); // 'Jill Kay'
-console.log(target.foo); // 'undefined'
+console.log(target.fullName); // 'undefined'
 ```
 
 ##### Example 2: Including read-only properties
@@ -329,8 +329,8 @@ merge(target, source, {
     includeReadOnly: true
 });
 
-console.log(source.foo); // 'Jill Kay'
-console.log(target.foo); // 'Jill Kay'
+console.log(source.fullName); // 'Jill Kay'
+console.log(target.fullName); // 'Jill Kay'
 ```
 
 ### `useReferenceIfArray`
@@ -350,14 +350,14 @@ This provides an efficient boundary between a defined configuration structure, a
 const target = {};
 
 const source = {
-    foo: ['Joe', 'Jill', 'Jim']
+    names: ['Joe', 'Jill', 'Jim']
 };
 
 merge(source, target, true);
 
-console.log(target.foo); // ['Joe', 'Jill', 'Jim']
+console.log(target.names); // ['Joe', 'Jill', 'Jim']
 
-assert.equal(target.foo, source.foo); // false
+assert.equal(target.names, source.names); // false
 ```
 
 ##### Example 2: Copying nested arrays by reference
@@ -365,7 +365,7 @@ assert.equal(target.foo, source.foo); // false
 const target = {};
 
 const source = {
-    foo: ['Joe', 'Jill', 'Jim']
+    names: ['Joe', 'Jill', 'Jim']
 };
 
 merge(source, target, {
@@ -373,9 +373,9 @@ merge(source, target, {
     useReferenceIfArray: true
 });
 
-console.log(target.foo); // ['Joe', 'Jill', 'Jim']
+console.log(target.names); // ['Joe', 'Jill', 'Jim']
 
-assert.equal(target.foo, source.foo); // true
+assert.equal(target.names, source.names); // true
 ```
 
 ### `useReferenceIfTargetUnset`
@@ -479,7 +479,7 @@ const myWidget = new Widget({option3: 50});
 // TypeError: Cannot add property option3, object is not extensible
 ```
 
-Unfortunately, this message is not particularly helpful novice developers who may not understand the concept of extensibility, nor is it particularly helpful for developers without intellisense who are forced to debug at runtime, which depending on your library's target demographic, could be the majority of users. There is where Helpful Merge comes in.
+Unfortunately, this message is not particularly helpful for novice developers who may not understand the concept of extensibility, nor is it particularly helpful for developers without intellisense who are forced to debug at runtime, which depending on your library's target demographic, could be the majority of users. This is where Helpful Merge comes in.
 
 We can replace `Object.assign()` in the above example with Helpful Merge's `merge()` implementation, which provides a helpful and customizable error message with a suggestion of the closest matching property name on the target object:
 
