@@ -22,7 +22,6 @@ function handleMergeError(err: Error, target: any, offendingKey: string, message
     // the offending key. Greatest number of matching characters wins.
 
     const bestMatch: IBestMatch = Object.keys(target).reduce(reducer, primer);
-
     const suggestion = bestMatch && bestMatch.totalMatching > 1 ? bestMatch.key : '';
 
     throw new TypeError(message(offendingKey, suggestion));
