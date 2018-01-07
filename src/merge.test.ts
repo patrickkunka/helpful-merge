@@ -16,6 +16,19 @@ describe('merge()', () => {
         assert.throws(() => merge(null, {}), Messages.TYPE_ERROR_TARGET(null));
     });
 
+    it('should accept an optional configuration object', () => {
+        assert.doesNotThrow(() => merge({}, {}, {
+            deep: true
+        }));
+    });
+
+    it('should eat its own dogfood', () => {
+        assert.throws(() => merge({}, {}, {
+            // @ts-ignore: Intentionally using incorrect interface to produce an exception
+            deepMerge: true
+        }), Messages.MERGE_ERROR('deepMerge', 'deep'));
+    });
+
     it('should shallow merge the properties of one object into another', () => {
         const obj1 = {
             foo: null,

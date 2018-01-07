@@ -13,7 +13,7 @@ import * as Messages    from './Messages';
  * @return {any}          A reference to the modified target object.
  */
 
-function merge(target: any, source: any, options: (IConfig|true) = {}): any {
+function merge<T extends any>(target: T, source: any, options: (IConfig|true) = null): T {
     let sourceKeys: string[] = [];
     let config: Config;
 
@@ -26,7 +26,7 @@ function merge(target: any, source: any, options: (IConfig|true) = {}): any {
     if (typeof options === 'boolean' && options === true) {
         config.deep = true;
     } else if (options && config !== options && typeof options === 'object') {
-        Object.assign(config, options);
+        merge(config, options);
 
         if ([ArrayStrategy.PUSH, ArrayStrategy.REPLACE].indexOf(config.arrayStrategy) < 0) {
             throw RangeError(Messages.INVALID_ARRAY_STRATEGY(config.arrayStrategy));
