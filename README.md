@@ -68,12 +68,12 @@ The function always returns a reference to the target object.
 merge(target, source, options?);
 ```
 
-|        | Name     | Type  |
-|--------|----------|-------|
-| param  | target   | `any` |
-| param  | source   | `any` |
+|        | Name     | Type     |
+|--------|----------|----------|
+| param  | target   | `object` |
+| param  | source   | `object` |
 | param  | options? | <code>IConfig&#124;true</code> |
-| return | target   | `any` |
+| return | target   | `object` |
 
 ## Configuration Options
 
