@@ -58,7 +58,7 @@ import merge from 'helpful-merge';
 
 Helpful Merge can be used in place of any existing merge implementation such as ES6 `Object.assign()`, lodash/underscore's `merge()`, or jQuery's `$.extend()`.
 
-Unlike `Object.assign()` however, Helpful Merge will only merge **one source object** into one target object at a time, as its third parameter is reserved for an optional configuration object (see [options](#options)).
+Unlike `Object.assign()` however, Helpful Merge will only merge **one source object** into one target object at a time, as its third parameter is reserved for an optional configuration object (see [Configuration Options](#configuration-options)).
 
 The function always returns a reference to the target object.
 
