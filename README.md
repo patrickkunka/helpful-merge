@@ -30,6 +30,8 @@ For the above example, Helpful Merge would throw the following exception:
 
 Helpful Merge is great for creating robust and helpful entry points for JavaScript libraries and APIs and also includes efficient and customizable implementations of deep recursive merge, array merge, and more.
 
+Helpful merge is small at only 4KB bundled and minified (2KB gzipped).
+
 #### Contents
 
 - [Installation](#installation)
