@@ -25,7 +25,7 @@ const source = {
 // Merge consumer options over defaults:
 merge(target, source);
 ```
-For the above example, Helpful Merge would throw the following exception:
+For the above example, Helpful Merge would throw the following exception, providing the closest matching suggestion for the offending property:
 
 **TypeError: Unknown property "Foo". Did you mean "foo"?**
 
