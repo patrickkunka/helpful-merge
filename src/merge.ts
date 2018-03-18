@@ -94,7 +94,11 @@ function merge<T extends any>(target: T, source: any, options: (IConfig|true) = 
                 // If property does not exist on target, instantiate an empty
                 // object or array to merge into
 
-                target[key] = Array.isArray(source[key]) ? [] : {};
+                try {
+                    target[key] = Array.isArray(source[key]) ? [] : {};
+                } catch (err) {
+                    handleMergeError(err, target, key, config.errorMessage);
+                }
             }
 
             // Recursively deep copy objects or arrays

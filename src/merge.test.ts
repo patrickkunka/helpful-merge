@@ -276,6 +276,18 @@ describe('merge()', () => {
         assert.throws(() => merge(obj1, obj2), Messages.MERGE_ERROR('foo'));
     });
 
+    it('should error when adding an undefined property on a sealed object and deep merging', () => {
+        const obj1 = {};
+
+        const obj2 = {
+            foo: {}
+        };
+
+        Object.seal(obj1);
+
+        assert.throws(() => merge(obj1, obj2, true), Messages.MERGE_ERROR('foo'));
+    });
+
     it('should error when adding an undefined property on a non-extensible object', () => {
         const obj1 = {};
 
