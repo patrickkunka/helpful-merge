@@ -14,21 +14,23 @@ import merge from 'helpful-merge';
 
 // Configuration interface with defaults:
 const target = Object.seal({
-    foo: 50
-    bar: false
+    autoplay: false
+    volume: 0.85
 });
 
 // Arbitrary consumer-provided options:
 const source = {
-    Foo: 300
+    autoplays: true
 };
 
 // Merge consumer options over defaults:
 merge(target, source);
-```
-For the above example, Helpful Merge would throw the following exception, providing the closest matching suggestion for the offending property:
 
-**TypeError: Unknown property "Foo". Did you mean "foo"?**
+// TypeError: Unknown property "autoplays". Did you mean "autoplay"?**
+```
+As demonstrated above, Helpful Merge will throw an exception when invalid properties are provided by the consumer, providing the closest matching suggestion for the offending property:
+
+**TypeError: Unknown property "autoplays". Did you mean "autplay"?**
 
 Helpful Merge is great for creating robust and helpful entry points for JavaScript libraries and APIs and also includes efficient and customizable implementations of deep recursive merge, array merge, and more.
 
