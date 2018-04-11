@@ -73,10 +73,10 @@ merge(target, source, options?);
 
 |        | Name     | Type     |
 |--------|----------|----------|
-| param  | target   | `object` |
-| param  | source   | `object` |
-| param  | options? | <code>IConfig&#124;true</code> |
-| return | target   | `object` |
+| @param  | target   | `T extends any` |
+| @param  | source   | `any` |
+| @param  | options? | <code>IConfig&#124;boolean</code> |
+| @return | target   | `T` |
 
 ## Configuration Options
 
