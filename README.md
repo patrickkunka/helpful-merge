@@ -71,8 +71,8 @@ The function always returns a reference to the target object.
 merge(target, source, options?);
 ```
 
-|        | Name     | Type     |
-|--------|----------|----------|
+|         | Name     | Type     |
+|---------|----------|----------|
 | @param  | target   | `T extends any` |
 | @param  | source   | `any` |
 | @param  | options? | <code>IConfig&#124;boolean</code> |
