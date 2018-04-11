@@ -30,7 +30,7 @@ merge(target, source);
 ```
 As demonstrated above, Helpful Merge will throw an exception when invalid properties are provided by the consumer, providing the closest matching suggestion for the offending property:
 
-**TypeError: Unknown property "autoplays". Did you mean "autplay"?**
+**TypeError: Unknown property "autoplays". Did you mean "autoplay"?**
 
 Helpful Merge is great for creating robust and helpful entry points for JavaScript libraries and APIs and also includes efficient and customizable implementations of deep recursive merge, array merge, and more.
 
