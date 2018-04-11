@@ -5,7 +5,7 @@
 [![Latest Release](https://img.shields.io/npm/v/helpful-merge.svg?style=flat-square)](https://www.npmjs.com/package/helpful-merge)
 [![Apache License](https://img.shields.io/npm/l/helpful-merge.svg?style=flat-square)](https://www.apache.org/licenses/)
 
-A highly-configurable merge implementation with intelligent error handling (suggestions) for validating consumer-provided input against configuration interfaces.
+A highly-configurable merge implementation with intelligent suggestion-based error handling for validating consumer-provided input against configuration interfaces.
 
 For example, consider the following common scenario of a consumer misspelling properties on a configuration interface:
 
