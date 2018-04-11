@@ -26,7 +26,7 @@ const source = {
 // Merge consumer options over defaults:
 merge(target, source);
 
-// TypeError: Unknown property "autoplays". Did you mean "autoplay"?**
+// TypeError: Unknown property "autoplays". Did you mean "autoplay"?
 ```
 As demonstrated above, Helpful Merge will throw an exception when invalid properties are provided by the consumer, providing the closest matching suggestion for the offending property:
 
