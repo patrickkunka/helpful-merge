@@ -12,19 +12,19 @@ For example, consider the following common scenario of a consumer misspelling pr
 ```js
 import merge from 'helpful-merge';
 
-// Configuration interface with defaults:
-const target = Object.seal({
+// Configuration interface with defaults (must be sealed):
+const defaults = Object.seal({
     autoplay: false
     volume: 0.85
 });
 
 // Arbitrary consumer-provided options:
-const source = {
+const options = {
     autoplays: true
 };
 
 // Merge consumer options over defaults:
-merge(target, source);
+merge(defaults, options);
 
 // TypeError: Unknown property "autoplays". Did you mean "autoplay"?
 ```
