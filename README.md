@@ -449,7 +449,7 @@ import merge from 'helpful-merge';
 // single source object
 merge.from(source).to(target).exec();
 
-// multiple sources (C -> B -> A -> target)
+// multiple sources (C -> target, B -> target, A -> target)
 merge.from(sourceA, sourceB, sourceC).to(target).exec();
 
 // with configuration
