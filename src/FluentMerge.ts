@@ -1,60 +1,45 @@
 import IConfig from './Interfaces/IConfig';
 import merge   from './merge';
 
-class FluentMerge<T extends any> {
+class FluentMerge<T = any> {
     private target: T = null;
     private sources: any[] = [];
     private config: IConfig|true = {};
 
-    constructor(firstInstruction) {
-        firstInstruction.bind(this);
-    }
-
     /**
-     * Supplies a "fluent merge" instance with a target object to merge into and return.
-     *
-     * @param  {any} target A target object to merge into.
-     * @return {FluentMerge}
+     * Supplies a fluent merge instance with a target object to merge into and return.
      */
 
-    public to(target: T) {
+    public to(target: T): FluentMerge {
         this.target = target;
 
         return this;
     }
 
     /**
-     * Supplies a "fluent merge" instance with one or more source objects to merge from, in right to left order.
-     *
-     * @param  {...any} sources One or more source objects to merge from, supplied as individual parameters.
-     * @return {FluentMerge}
+     * Supplies a fluent merge instance with one or more source objects to merge from, in right to left order.
      */
 
-    public from(...sources: any[]) {
+    public from(...sources: any[]): FluentMerge {
         this.sources = sources;
 
         return this;
     }
 
     /**
-     * Supplies a "fluent merge" instance with a configuration object of one or more options.
-     *
-     * @param  {IConfig|true} options An optional configuration object.
-     * @return {FluentMerge}
+     * Supplies a fluent merge instance with a configuration object of one or more options.
      */
 
-    public with(options?: IConfig|true) {
+    public with(options?: IConfig|true): FluentMerge {
         this.config = options;
 
         return this;
     }
 
     /**
-     * Executes a "fluent merge" instance, merging all provided sources into the
+     * Executes a fluent merge instance, merging all provided sources into the
      * target, as per any provided configuration, and returning a reference to
      * the target.
-     *
-     * @return {any}
      */
 
     public exec(): T {

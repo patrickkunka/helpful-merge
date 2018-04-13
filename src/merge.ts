@@ -103,8 +103,10 @@ function merge<T extends any>(target: T, source: any, options: (IConfig|true) = 
     return target;
 }
 
-(merge as IMerge<any>).from = () => new FluentMerge(FluentMerge.prototype.from);
-(merge as IMerge<any>).to = () => new FluentMerge(FluentMerge.prototype.to);
-(merge as IMerge<any>).with = () => new FluentMerge(FluentMerge.prototype.with);
+const createFluent = method => (...args) => new FluentMerge()[method](...args);
+
+Object
+    .keys(FluentMerge.prototype)
+    .forEach(method => merge[method] = createFluent(method));
 
 export default merge as IMerge<any>;

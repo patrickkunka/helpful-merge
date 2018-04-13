@@ -15,27 +15,18 @@ interface IMerge<T extends any> {
 
     /**
      * Supplies a "fluent merge" instance with one or more source objects to merge from, in right to left order.
-     *
-     * @param  {...any} sources One or more source objects to merge from, supplied as individual parameters.
-     * @return {FluentMerge}
      */
 
     from: (...sources: any[]) => FluentMerge<T>;
 
     /**
      * Supplies a "fluent merge" instance with a target object to merge into and return.
-     *
-     * @param  {any} target A target object to merge into.
-     * @return {FluentMerge}
      */
 
     to: (target: T) => FluentMerge<T>;
 
     /**
      * Supplies a "fluent merge" instance with a configuration object of one or more options.
-     *
-     * @param  {IConfig|true} options An optional configuration object.
-     * @return {FluentMerge}
      */
 
     with: (options: (IConfig|true)) => FluentMerge<T>;
