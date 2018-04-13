@@ -71,12 +71,12 @@ The function always returns a reference to the target object.
 merge(target, source, options?);
 ```
 
-|         | Name     | Type     |
-|---------|----------|----------|
-| @param  | target   | `T extends any` |
-| @param  | source   | `any` |
-| @param  | options? | <code>IConfig&#124;boolean</code> |
-| @return | target   | `T` |
+|         | Name     | Type     | Description |
+|---------|----------|----------|-------------|
+| @param  | target   | `T extends any` | The target object to merge into |
+| @param  | source   | `any` | The source object to merge properties from |
+| @param  | options? | <code>IConfig&#124;boolean</code> | An object of optional configuration options or `true` as a shorthand for `{deep: true}` |
+| @return | target   | `T` | A reference to the updated target object |
 
 ## Configuration Options
 
