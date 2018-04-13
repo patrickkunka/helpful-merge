@@ -1,7 +1,9 @@
 import Config           from './Config';
 import ArrayStrategy    from './Constants/ArrayStrategy';
+import FluentMerge      from './FluentMerge';
 import handleMergeError from './handleMergeError';
 import IConfig          from './Interfaces/IConfig';
+import IMerge           from './Interfaces/IMerge';
 import * as Messages    from './Messages';
 
 /**
@@ -110,4 +112,8 @@ function merge<T extends any>(target: T, source: any, options: (IConfig|true) = 
     return target;
 }
 
-export default merge;
+(merge as IMerge<any>).from = () => new FluentMerge(FluentMerge.prototype.from);
+(merge as IMerge<any>).to = () => new FluentMerge(FluentMerge.prototype.to);
+(merge as IMerge<any>).with = () => new FluentMerge(FluentMerge.prototype.with);
+
+export default merge as IMerge<any>;
