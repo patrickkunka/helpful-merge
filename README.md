@@ -443,7 +443,7 @@ When using the default calling syntax (`merge()`), the third parameter is revers
 In order to accomodate multiple source objects, an alternative "fluent" syntax is provided whereby we can construct a merge operation by chaining together various semantic methods:
 
 ```js
-import merge from `helpful-merge`;
+import merge from 'helpful-merge';
 
 // single source object
 merge.from(source).to(target).exec();
