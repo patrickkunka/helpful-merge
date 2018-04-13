@@ -41,6 +41,7 @@ Helpful merge is small at only 4KB bundled and minified (2KB gzipped).
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration Options](#configuration-options)
+- [Fluent Interface](#fluent-interface)
 - [Library Example](#library-example)
 
 ## Installation
