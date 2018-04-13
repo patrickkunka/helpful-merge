@@ -61,9 +61,9 @@ import merge from 'helpful-merge';
 
 Helpful Merge can be used in place of any existing merge implementation such as ES6 `Object.assign()`, lodash/underscore's `merge()`, or jQuery's `$.extend()`.
 
-Unlike `Object.assign()` however, Helpful Merge will only merge **one source object** into one target object at a time, as its third parameter is reserved for an optional configuration object (see [Configuration Options](#configuration-options)).
+Unlike `Object.assign()` however, Helpful Merge will only merge **one source object** into one target object at a time when using the standard calling syntax. This is because its third parameter is reserved for an optional configuration object (see [Configuration Options](#configuration-options)).
 
-The function always returns a reference to the target object.
+If you would like to merge multiple source objects into a target object in a single operation, Helpful Merge provides an alternative "fluent" interface for doing this. See [Fluent Interface](#fluent-interface).
 
 #### Syntax
 
@@ -434,14 +434,50 @@ console.log(target.foo.bar); // {}
 assert.equal(target.foo.bar, source.foo.bar); // true
 ```
 
+## Fluent Interface
+
+Sometimes we may want to merge multiple source objects into a target object in a single operation for brevity, just as we can do with ES6 `Object.assign()`.
+
+When using the default calling syntax (`merge()`), the third parameter is reversed for an optional configuration object, meaning we can only supply a single source object.
+
+In order to accomodate multiple source objects, an alternative "fluent" syntax is provided whereby we can construct a merge operation by chaining together various semantic methods:
+
+```js
+import merge from `helpful-merge`;
+
+// single source object
+merge.from(source).to(target).exec();
+
+// multiple sources (C -> B -> A -> target)
+merge.from(sourceA, sourceB, sourceC).to(target).exec();
+
+// with configuration
+merge.from(source).to(target).with({deep: true}).exec();
+
+// in any order
+merge.with({deep: true}).to(target).from(source).exec();
+
+// return value
+const foo = merge.with(true).to(new Foo()).from({bar: 'baz'}).exec();
+
+// omit `.to()` for basic object cloning
+const clone = merge.from(source).exec();
+```
+
+The final `.exec()` method must always be called in order to execute the operation and return the target reference.
+
+Just as with `Object.assign()`, multiple sources are merged from **right to left**.
+
+All available configuration options may be supplied to `.with()`.
+
 ## Library Example
 
 A common pattern in many libraries is to allow the consumer to provide an optional object of configuration options:
 
 ```js
-const myWidget = new Widget({
-    option1: true,
-    option2: 300
+const player = new Player({
+    autoplay: true,
+    volume: 0.8
 });
 ```
 
@@ -453,19 +489,19 @@ By implementing a sealed configuration class internally with sensible defaults, 
 ```js
 class Config {
     constructor() {
-        this.option1 = false;
-        this.option2 = 50;
+        this.autoplay = false;
+        this.volume = 0.8;
 
         Object.seal(this);
     }
 }
 ```
 
-#### ./Widget.js
+#### ./Player.js
 ```js
 import Config from './Config.js';
 
-class Widget {
+class Player {
     constructor(options={}) {
         this.config = new Config();
 
@@ -477,22 +513,22 @@ class Widget {
 When the consumer provides an option not defined in the config class, a type error will be thrown:
 
 ```js
-const myWidget = new Widget({option3: 50});
+const player = new Player({autoPlay: false});
 
-// TypeError: Cannot add property option3, object is not extensible
+// TypeError: Cannot add property autoPlay, object is not extensible
 ```
 
 Unfortunately, this message is not particularly helpful for novice developers who may not understand the concept of extensibility, nor is it particularly helpful for developers without intellisense who are forced to debug at runtime, which depending on your library's target demographic, could be the majority of users. This is where Helpful Merge comes in.
 
 We can replace `Object.assign()` in the above example with Helpful Merge's `merge()` implementation, which provides a helpful and customizable error message with a suggestion of the closest matching property name on the target object:
 
-#### ./Widget.js
+#### ./Player.js
 ```js
 import merge from 'helpful-merge';
 
 import Config from './Config';
 
-class Widget {
+class Player {
     constructor(options={}) {
         this.config = new Config();
 
@@ -504,9 +540,9 @@ class Widget {
 Now the consumer will see the following error message:
 
 ```js
-const myWidget = new Widget({option3: 50});
+const player = new Widget({autoPlay: false});
 
-// TypeError: Unknown property "option3". Did you mean "option2"?
+// TypeError: Unknown property "autoPlay". Did you mean "autoplay"?
 ```
 
 This provides an easy means of catching typos, incorrect casing, or API version mismatches, which in turn provides a great developer experience for consumers of your library or API.
@@ -514,7 +550,7 @@ This provides an easy means of catching typos, incorrect casing, or API version 
 Helpful Merge also allows us to easily customize this error message to further improve the developer experience for your library or API. For example:
 
 ```js
-// TypeError: [Widget] Invalid configuration option "option3". Did you mean "option2"?
+// TypeError: [Player] Invalid configuration option "autoPlay". Did you mean "autoplay"?
 ```
 
 ---
