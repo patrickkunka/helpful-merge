@@ -75,7 +75,7 @@ merge(target, source, options?);
 |---------|----------|----------|-------------|
 | @param  | target   | `T extends any` | The target object to merge into |
 | @param  | source   | `any` | The source object to merge properties from |
-| @param  | options? | <code>IConfig&#124;boolean</code> | An object of optional configuration options or `true` as a shorthand for `{deep: true}` |
+| @param  | options? | <code>IConfig&#124;boolean</code> | An optional object of configuration options or `true` as a shorthand for `{deep: true}` |
 | @return | target   | `T` | A reference to the updated target object |
 
 ## Configuration Options
