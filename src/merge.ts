@@ -6,15 +6,6 @@ import IConfig          from './Interfaces/IConfig';
 import IMerge           from './Interfaces/IMerge';
 import * as Messages    from './Messages';
 
-/**
- * Merges the properties of a source object into a target object.
- *
- * @param  {any}          target  The target object to be merged into.
- * @param  {any}          source  The source object containing the properties to be copied.
- * @param  {IConfig|true} options An optional configuration object, or `true` as a shorthand for `{deep: true}`.
- * @return {any}          A reference to the modified target object.
- */
-
 function merge<T extends any>(target: T, source: any, options: (IConfig|true) = null): T {
     let sourceKeys: string[] = [];
     let config: Config;

@@ -7,7 +7,7 @@ const {assert} = chai;
 
 describe('FluentMerge', () => {
     it('performs a basic merge', () => {
-        const target = merge.to({}).from({foo: 'bar'}).return();
+        const target = merge.to({}).from({foo: 'bar'}).exec();
 
         assert.deepEqual(target, {foo: 'bar'});
     });
@@ -17,33 +17,33 @@ describe('FluentMerge', () => {
             .with({deep: true})
             .from({foo: 'bar'})
             .to({})
-            .return();
+            .exec();
 
         assert.deepEqual(target, {foo: 'bar'});
     });
 
     it('merges multiple sources', () => {
-        const target = merge.to({}).from({foo: 'foo'}, {bar: 'bar'}).return();
+        const target = merge.to({}).from({foo: 'foo'}, {bar: 'bar'}).exec();
 
         assert.deepEqual(target, {foo: 'foo', bar: 'bar'});
     });
 
     it('merges multiple sources from right to left', () => {
-        const target = merge.to({}).from({foo: 'foo'}, {foo: 'bar'}).return();
+        const target = merge.to({}).from({foo: 'foo'}, {foo: 'bar'}).exec();
 
         assert.deepEqual(target, {foo: 'bar'});
     });
 
     it('will copy the source(s) if no target is supplied', () => {
         const source = {foo: 'foo'};
-        const target = merge.from(source).return();
+        const target = merge.from(source).exec();
 
         assert.notEqual(source, target);
     });
 
     it('accepts a configuration opject', () => {
         const source = {foo: []};
-        const target = merge.to({}).from(source).with(true).return();
+        const target = merge.to({}).from(source).with(true).exec();
 
         assert.notEqual(source.foo, target.foo);
     });
