@@ -1,6 +1,6 @@
 {
   "name": "helpful-merge",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A highly-configurable merge implementation with intelligent error handling for validating consumer-provided input against configuration interfaces.",
   "author": "KunkaLabs Limited",
   "private": false,
@@ -49,7 +49,7 @@
     "@types/node": "^8.0.53",
     "chai": "^3.5.0",
     "chai-shallow-deep-equal": "^1.4.0",
-    "coveralls": "^3.0.0",
+    "coveralls": "^3.0.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.0.2",
     "nyc": "^11.3.0",
@@ -57,5 +57,9 @@
     "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
     "typescript": "^2.6.1"
+  },
+  "dependencies": {
+    "jsdom": "^11.11.0",
+    "jsdom-global": "^3.0.2"
   }
 }

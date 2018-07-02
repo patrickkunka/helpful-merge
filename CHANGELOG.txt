@@ -1,0 +1,3 @@
+# v0.1.0
+
+- Will not attempt to deep-merge DOM nodes if provided as part of a nested source object. This previously resulted in an infinite loop due to circular references.

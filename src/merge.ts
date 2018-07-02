@@ -7,6 +7,8 @@ import IMerge           from './Interfaces/IMerge';
 import * as Messages    from './Messages';
 
 function merge<T extends any>(target: T, source: any, options: (IConfig|true) = null): T {
+    const isClientSide = typeof window !== undefined;
+
     let sourceKeys: string[] = [];
     let config: Config;
 
@@ -64,6 +66,9 @@ function merge<T extends any>(target: T, source: any, options: (IConfig|true) = 
         if (
             !config.deep ||
             typeof source[key] !== 'object' ||
+            (isClientSide && source[key] instanceof (window as any).Node) ||
+            (isClientSide && source[key] === window.document.body) ||
+            (isClientSide && source[key] === window.document.documentElement) ||
             source[key] === null ||
             (Array.isArray(source[key]) && config.useReferenceIfArray) ||
             (!target[key] && config.useReferenceIfTargetUnset)
@@ -71,6 +76,7 @@ function merge<T extends any>(target: T, source: any, options: (IConfig|true) = 
             // If:
             // - Shallow merge
             // - All non-object primatives
+            // - <html>, <body>, or DOM Nodes
             // - Null pointers
             // - Arrays, if `useReferenceIfArray` set
             // - Target prop null or undefined and `useRererenceIfTargetUnset` set

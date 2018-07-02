@@ -424,4 +424,19 @@ describe('merge()', () => {
         assert.isArray(obj1.foo);
         assert.notEqual(obj1.foo, obj2.foo);
     });
+
+    it('should handle recursively merging of nested DOM elements when `deep` option set', () => {
+        const div = document.createElement('div');
+
+        const obj1 = {foo: {bar: {}, baz: null, qux: {}}};
+        const obj2 = {foo: {bar: div, baz: document.body, qux: document.documentElement}};
+
+        merge(obj1, obj2, {
+            deep: true
+        });
+
+        assert.equal(obj1.foo.bar, div);
+        assert.equal(obj1.foo.baz, document.body);
+        assert.equal(obj1.foo.qux, document.documentElement);
+    });
 });
