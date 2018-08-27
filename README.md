@@ -118,7 +118,7 @@ merge(target, source, true);
 - [errorMessage](#errormessage)
 - [includeNonEnumerable](#includenonenumerable)
 - [includeReadOnly](#includereadonly)
-- [preserveTypeIfTargetUnset](#preserveTypeIfTargetUnset)
+- [preserveTypeIfTargetUnset](#preservetypeiftargetunset)
 - [useReferenceIfArray](#usereferenceifarray)
 - [useReferenceIfTargetUnset](#usereferenceiftargetunset)
 
