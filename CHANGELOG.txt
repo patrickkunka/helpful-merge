@@ -1,3 +1,7 @@
+# v0.2.0
+
+- Adds new configuration option `preserveTypeIfTargetUnset` allowing preservation of custom types (e.g. consumer classes), when they can not be inferred from the target.
+
 # v0.1.3
 
 - Fixes issue where library erroneously detected client-side environment when running on Node.js.

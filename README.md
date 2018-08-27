@@ -90,6 +90,7 @@ The `merge()` function accepts an optional third parameter of configuration opti
     errorMessage: Messages.MERGE_ERROR,
     includeNonEnumerable: false,
     includeReadOnly: false
+    preserveTypeIfTargetUnset: false,
     useReferenceIfArray: false,
     useReferenceIfTargetUnset: false,
 }
@@ -117,6 +118,7 @@ merge(target, source, true);
 - [errorMessage](#errormessage)
 - [includeNonEnumerable](#includenonenumerable)
 - [includeReadOnly](#includereadonly)
+- [preserveTypeIfTargetUnset](#preserveTypeIfTargetUnset)
 - [useReferenceIfArray](#usereferenceifarray)
 - [useReferenceIfTargetUnset](#usereferenceiftargetunset)
 
@@ -335,6 +337,61 @@ merge(target, source, {
 
 console.log(source.fullName); // 'Jill Kay'
 console.log(target.fullName); // 'Jill Kay'
+```
+
+### `preserveTypeIfTargetUnset`
+
+| Type      | Default |
+|-----------|---------|
+| `boolean` | `false` |
+
+An optional boolean dictating whether or not to attempt preservation of custom types, when performing a deep merge into a `null` (unset) target value.
+
+For example, property `source.foo` may be an instance of consumer class `Foo`, and property `target.foo` may be set to `null`. By default in this scenario, the individual properties and values of `source.foo` would be copied onto a new plain object (`{}`) which would be assigned to `target.foo`.
+
+If set to `true`, the helpful merge will attempt to derive the custom type (`Foo`) of `source.foo`, assign a new instance of it to `target.foo`, and then copy all values across.
+
+This is particularly useful when read-only computed properties ("getters") are present on the source object and should be maintained on the target object.
+
+##### Example 1: Deep copying into a nested unset target (default behavior)
+```js
+class Foo {}
+
+const source = {
+    foo: new Foo()
+}
+
+const target = {
+    foo: null
+};
+
+merge(target, source, true);
+
+assert.isOk(target.foo); // true
+assert.instanceOf(source.foo, Foo); // true
+assert.instanceOf(target.foo, Foo); // false
+```
+
+##### Example 2: Deep copying into a nested unset target with type preservation
+```js
+class Foo {}
+
+const source = {
+    foo: new Foo()
+}
+
+const target = {
+    foo: null
+};
+
+merge(target, source, {
+    deep: true,
+    preserveTypeIfTargetUnset: true
+});
+
+assert.isOk(target.foo); // true
+assert.instanceOf(source.foo, Foo); // true
+assert.instanceOf(target.foo, Foo); // true
 ```
 
 ### `useReferenceIfArray`

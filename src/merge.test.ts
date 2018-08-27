@@ -84,7 +84,7 @@ describe('merge()', () => {
         assert.equal(obj1.foo.bar, 1);
     });
 
-    it(`should add nested objects by references when deep merging,
+    it(`should add nested objects by references when deep merging, and
         \`useReferenceIfTargetUnset\` option set, and target is unset`, () => {
         const obj1 = {foo: null};
         const obj2 = {foo: {bar: 1}};
@@ -96,6 +96,38 @@ describe('merge()', () => {
 
         assert.equal(obj1.foo, obj2.foo);
         assert.equal(obj1.foo.bar, 1);
+    });
+
+    it(`should maintain the types of nested objects when deep merging, and
+        \`preserveTypeIfTargetUnset\` option set, and target is unset`, () => {
+        class Foo {}
+
+        const obj1 = {foo: null};
+        const obj2 = {foo: new Foo()};
+
+        merge(obj1, obj2, {
+            deep: true,
+            preserveTypeIfTargetUnset: true
+        });
+
+        assert.notEqual(obj1.foo, obj2.foo);
+        assert.instanceOf(obj1.foo, Foo);
+        assert.instanceOf(obj2.foo, Foo);
+    });
+
+    it(`should handle plain objects when deep merging, and
+        \`preserveTypeIfTargetUnset\` option set, and target is unset`, () => {
+        const obj1 = {foo: null};
+        const obj2 = {foo: {}};
+
+        merge(obj1, obj2, {
+            deep: true,
+            preserveTypeIfTargetUnset: true
+        });
+
+        assert.notEqual(obj1.foo, obj2.foo);
+        assert.instanceOf(obj1.foo, Object);
+        assert.instanceOf(obj2.foo, Object);
     });
 
     it('should skip read-only properties', () => {

@@ -1,10 +1,11 @@
-import Config           from './Config';
-import ArrayStrategy    from './Constants/ArrayStrategy';
-import FluentMerge      from './FluentMerge';
-import handleMergeError from './handleMergeError';
-import IConfig          from './Interfaces/IConfig';
-import IMerge           from './Interfaces/IMerge';
-import * as Messages    from './Messages';
+import Config                   from './Config';
+import ArrayStrategy            from './Constants/ArrayStrategy';
+import deriveCustomTypeInstance from './deriveCustomTypeInstance';
+import FluentMerge              from './FluentMerge';
+import handleMergeError         from './handleMergeError';
+import IConfig                  from './Interfaces/IConfig';
+import IMerge                   from './Interfaces/IMerge';
+import * as Messages            from './Messages';
 
 function merge<T extends any>(target: T, source: any, options: (IConfig|true) = null): T {
     const isClientSide = typeof window !== 'undefined';
@@ -91,10 +92,12 @@ function merge<T extends any>(target: T, source: any, options: (IConfig|true) = 
 
             if (!Object.prototype.hasOwnProperty.call(target, key) || target[key] === null) {
                 // If property does not exist on target, instantiate an empty
-                // object or array to merge into
+                // object, custom type or array to merge into
 
                 try {
-                    target[key] = Array.isArray(source[key]) ? [] : {};
+                    target[key] = Array.isArray(source[key]) ?
+                        [] : config.preserveTypeIfTargetUnset ?
+                            deriveCustomTypeInstance(source[key]) : {};
                 } catch (err) {
                     handleMergeError(err, target, key, config.errorMessage);
                 }

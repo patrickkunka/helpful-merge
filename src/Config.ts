@@ -7,6 +7,7 @@ class Config implements IConfig {
     public deep:                        boolean             = false;
     public useReferenceIfTargetUnset:   boolean             = false;
     public useReferenceIfArray:         boolean             = false;
+    public preserveTypeIfTargetUnset:   boolean             = false;
     public includeReadOnly:             boolean             = false;
     public includeNonEmurable:          boolean             = false;
     public arrayStrategy:               ArrayStrategy       = ArrayStrategy.REPLACE;

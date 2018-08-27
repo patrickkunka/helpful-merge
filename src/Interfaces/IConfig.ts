@@ -5,6 +5,7 @@ interface IConfig {
     deep?:                      boolean;
     useReferenceIfTargetUnset?: boolean;
     useReferenceIfArray?:       boolean;
+    preserveTypeIfTargetUnset?: boolean;
     includeReadOnly?:           boolean;
     includeNonEmurable?:        boolean;
     arrayStrategy?:             ArrayStrategy;
