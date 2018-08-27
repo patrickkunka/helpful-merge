@@ -349,7 +349,7 @@ An optional boolean dictating whether or not to attempt preservation of custom t
 
 For example, property `source.foo` may be an instance of consumer class `Foo`, and property `target.foo` may be set to `null`. By default in this scenario, the individual properties and values of `source.foo` would be copied onto a new plain object (`{}`) which would be assigned to `target.foo`.
 
-If set to `true`, the helpful merge will attempt to derive the custom type (`Foo`) of `source.foo`, assign a new instance of it to `target.foo`, and then copy all values across.
+When `preserveTypeIfTargetUnset` is set to `true`, Helpful Merge will attempt to derive the custom type (`Foo`) of `source.foo`, assign a new instance of it to `target.foo`, and then copy all values across.
 
 This is particularly useful when read-only computed properties ("getters") are present on the source object and should be maintained on the target object.
 
