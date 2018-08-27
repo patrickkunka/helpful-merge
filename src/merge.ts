@@ -7,7 +7,7 @@ import IMerge           from './Interfaces/IMerge';
 import * as Messages    from './Messages';
 
 function merge<T extends any>(target: T, source: any, options: (IConfig|true) = null): T {
-    const isClientSide = typeof window !== undefined;
+    const isClientSide = typeof window !== 'undefined';
 
     let sourceKeys: string[] = [];
     let config: Config;
